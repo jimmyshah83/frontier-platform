@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "loan-processor"
+version = "0.1.0"
+description = "Loan Processing System using Microsoft Foundry Agent Framework"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+
+dependencies = [
+    "mcp[cli]>=1.9.0",
+    "azure-identity>=1.15.0",
+    "azure-storage-blob>=12.19.0",
+    "azure-functions>=1.18.0",
+    "python-dotenv>=1.0.0",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+# Pre-release agent framework packages - install with: uv pip install -e ".[agent]" --prerelease=allow
+agent = [
+    "agent-framework",
+    "agent-framework-azure-ai",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/loan_processor"]
+
+[tool.uv]
+prerelease = "allow"
