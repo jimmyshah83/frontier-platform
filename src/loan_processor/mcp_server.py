@@ -3,7 +3,7 @@ Content Understanding MCP Server
 
 This module implements a local MCP server that exposes Content Understanding
 as MCP tools for loan document processing. Can be run locally for testing
-or deployed to Azure Functions.
+or deployed to Azure Container Apps.
 """
 
 import asyncio
@@ -60,21 +60,46 @@ class ContentUnderstandingClient:
         token = self.credential.get_token("https://cognitiveservices.azure.com/.default")
         return token.token
 
+    async def _poll_for_result(self, client: httpx.AsyncClient, operation_location: str, token: str) -> dict[str, Any]:
+        """Poll for analysis results."""
+        logger.info(f"Polling for results at: {operation_location}")
+        for _ in range(60):  # Max 60 attempts (2 minutes)
+            await asyncio.sleep(2)
+
+            result_response = await client.get(
+                operation_location,
+                headers={"Authorization": f"Bearer {token}"},
+            )
+            result_response.raise_for_status()
+            result = result_response.json()
+
+            status = result.get("status", "")
+            if status == "Succeeded":
+                logger.info("Document analysis completed successfully")
+                return result
+            elif status in ("Failed", "Canceled"):
+                raise ValueError(f"Analysis failed with status: {status}")
+
+            logger.debug(f"Analysis status: {status}, waiting...")
+
+        raise TimeoutError("Document analysis timed out")
+
     async def analyze_document(self, document_url: str) -> dict[str, Any]:
         """
-        Analyze a document using Content Understanding.
+        Analyze a document using Content Understanding via URL.
 
         Args:
-            document_url: URL of the document to analyze (blob URL or public URL)
+            document_url: URL of the document to analyze (public URL, raw GitHub URL, etc.)
 
         Returns:
             Analysis result with extracted fields
         """
         token = await self._get_token()
 
-        # Use prebuilt-document analyzer with custom field schema for loan apps
+        # Remove trailing slash from endpoint if present
+        endpoint = self.endpoint.rstrip("/")
         analyzer_id = "prebuilt-document"
-        analyze_url = f"{self.endpoint}/contentunderstanding/analyzers/{analyzer_id}:analyze"
+        analyze_url = f"{endpoint}/contentunderstanding/analyzers/{analyzer_id}:analyze"
 
         headers = {
             "Authorization": f"Bearer {token}",
@@ -82,50 +107,29 @@ class ContentUnderstandingClient:
         }
 
         params = {"api-version": self.api_version}
-
-        # Request body with document URL
-        body = {
-            "inputs": [{"url": document_url}],
-        }
+        body = {"inputs": [{"url": document_url}]}
 
         async with httpx.AsyncClient(timeout=120.0) as client:
-            # Start analysis
-            logger.info(f"Starting document analysis for: {document_url}")
+            logger.info(f"Starting document analysis for URL: {document_url}")
+            logger.debug(f"Analyze URL: {analyze_url}")
             response = await client.post(
                 analyze_url,
                 headers=headers,
                 params=params,
                 json=body,
             )
+            
+            # Log error details if request fails
+            if response.status_code >= 400:
+                logger.error(f"API Error: {response.status_code} - {response.text}")
+            
             response.raise_for_status()
 
-            # Get operation location for polling
             operation_location = response.headers.get("Operation-Location")
             if not operation_location:
                 raise ValueError("No Operation-Location header in response")
 
-            # Poll for results
-            logger.info(f"Polling for results at: {operation_location}")
-            for _ in range(60):  # Max 60 attempts (2 minutes)
-                await asyncio.sleep(2)
-
-                result_response = await client.get(
-                    operation_location,
-                    headers={"Authorization": f"Bearer {token}"},
-                )
-                result_response.raise_for_status()
-                result = result_response.json()
-
-                status = result.get("status", "")
-                if status == "Succeeded":
-                    logger.info("Document analysis completed successfully")
-                    return result
-                elif status in ("Failed", "Canceled"):
-                    raise ValueError(f"Analysis failed with status: {status}")
-
-                logger.debug(f"Analysis status: {status}, waiting...")
-
-            raise TimeoutError("Document analysis timed out")
+            return await self._poll_for_result(client, operation_location, token)
 
 
 # ============================================================================
@@ -257,7 +261,7 @@ def create_mcp_server() -> Server:
         return [
             Tool(
                 name="extract_loan_data",
-                description="""Extract structured loan application data from a document.
+                description="""Extract structured loan application data from a document URL.
 
 Extracts the following fields from loan application documents:
 - Applicant name
@@ -269,13 +273,14 @@ Extracts the following fields from loan application documents:
 - Loan purpose
 - Property address
 
-Supports PDF, images, and Office documents.""",
+Supports PDF, images, and Office documents.
+Provide a publicly accessible URL (e.g., raw GitHub URL, public blob URL).""",
                 inputSchema={
                     "type": "object",
                     "properties": {
                         "document_url": {
                             "type": "string",
-                            "description": "URL of the loan document to analyze (Azure Blob URL or public URL)",
+                            "description": "Public URL of the loan document to analyze (e.g., https://raw.githubusercontent.com/user/repo/main/doc.pdf)",
                         },
                     },
                     "required": ["document_url"],
@@ -283,16 +288,17 @@ Supports PDF, images, and Office documents.""",
             ),
             Tool(
                 name="get_document_text",
-                description="""Extract full text/markdown content from a document.
+                description="""Extract full text/markdown content from a document URL.
 
 Returns the complete text content of a document in markdown format,
-useful for further analysis or summarization.""",
+useful for further analysis or summarization.
+Provide a publicly accessible URL.""",
                 inputSchema={
                     "type": "object",
                     "properties": {
                         "document_url": {
                             "type": "string",
-                            "description": "URL of the document to extract text from",
+                            "description": "Public URL of the document to extract text from",
                         },
                     },
                     "required": ["document_url"],
@@ -306,11 +312,12 @@ useful for further analysis or summarization.""",
 
         if name == "extract_loan_data":
             document_url = arguments.get("document_url")
+
             if not document_url:
                 return [TextContent(type="text", text="Error: document_url is required")]
 
             try:
-                logger.info(f"Extracting loan data from: {document_url}")
+                logger.info(f"Extracting loan data from URL: {document_url}")
                 result = await cu_client.analyze_document(document_url)
                 loan_data = extract_loan_fields(result)
 
@@ -327,11 +334,12 @@ useful for further analysis or summarization.""",
 
         elif name == "get_document_text":
             document_url = arguments.get("document_url")
+
             if not document_url:
                 return [TextContent(type="text", text="Error: document_url is required")]
 
             try:
-                logger.info(f"Extracting text from: {document_url}")
+                logger.info(f"Extracting text from URL: {document_url}")
                 result = await cu_client.analyze_document(document_url)
                 contents = result.get("result", {}).get("contents", [])
 
