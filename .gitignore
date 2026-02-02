@@ -209,3 +209,4 @@ __marimo__/
 #Others
 initial-plan.md
 scripts
+.env.azure

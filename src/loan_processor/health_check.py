@@ -27,6 +27,9 @@ def check_core_packages() -> bool:
         ("dotenv", "python-dotenv"),
         ("azure.identity", "Azure Identity"),
         ("azure.storage.blob", "Azure Storage Blob"),
+        ("httpx", "HTTPX"),
+        ("uvicorn", "Uvicorn"),
+        ("starlette", "Starlette"),
     ]
 
     for module, name in packages:
@@ -65,13 +68,42 @@ def check_agent_framework() -> bool:
 def check_mcp() -> bool:
     """Check MCP SDK."""
     print("\n🔌 MCP SDK:")
+    all_ok = True
 
     try:
         from mcp.server import Server
-        print_status("mcp[cli]", True)
+        print_status("mcp.server.Server", True)
+    except ImportError as e:
+        print_status(f"mcp.server: {e}", False)
+        all_ok = False
+
+    try:
+        from mcp.types import Tool, TextContent
+        print_status("mcp.types", True)
+    except ImportError as e:
+        print_status(f"mcp.types: {e}", False)
+        all_ok = False
+
+    return all_ok
+
+
+def check_mcp_server_module() -> bool:
+    """Check local MCP server module."""
+    print("\n🔧 MCP Server Module:")
+
+    try:
+        from loan_processor.mcp_server import create_mcp_server, LoanApplicationData
+        print_status("MCP server module imports", True)
+
+        # Validate the loan schema
+        data = LoanApplicationData(applicant_name="Test", loan_amount_requested=100000)
+        print_status(f"LoanApplicationData schema OK", True)
         return True
     except ImportError as e:
-        print_status(f"mcp: {e}", False)
+        print_status(f"MCP server import failed: {e}", False)
+        return False
+    except Exception as e:
+        print_status(f"MCP server error: {e}", False)
         return False
 
 
@@ -131,6 +163,7 @@ def main() -> int:
         check_core_packages(),
         check_agent_framework(),
         check_mcp(),
+        check_mcp_server_module(),
         check_config(),
         check_azure_connectivity(),
     ]
@@ -138,7 +171,10 @@ def main() -> int:
     print("\n" + "=" * 50)
     if all(results):
         print("✅ All checks passed!")
-        print("\nNext: Create .env from .env.example and configure Azure")
+        print("\nTo run the local MCP server:")
+        print("  uv run python -m loan_processor.local_mcp_server")
+        print("\nTo test with MCP Inspector:")
+        print("  npx @modelcontextprotocol/inspector http://127.0.0.1:8000/mcp")
         return 0
     else:
         print("❌ Some checks failed")
