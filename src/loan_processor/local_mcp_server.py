@@ -104,7 +104,7 @@ def create_app() -> Starlette:
 
 def main():
     """Run the local MCP server."""
-    host = os.getenv("MCP_HOST", "127.0.0.1")
+    host = os.getenv("MCP_HOST", "0.0.0.0")
     port = int(os.getenv("MCP_PORT", "8000"))
 
     logger.info(f"Starting MCP server on http://{host}:{port}")
