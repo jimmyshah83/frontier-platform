@@ -56,6 +56,7 @@ Server endpoints:
 
 ```bash
 npx @modelcontextprotocol/inspector uv run python -m loan_processor.stdio_server
+npx @modelcontextprotocol/inspector --url "https://$CONTAINER_APP_URL/mcp"
 ```
 
 This opens a browser UI where you can:

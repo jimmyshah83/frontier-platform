@@ -5,25 +5,23 @@ Run this server locally for testing with MCP Inspector or agents.
 Uses the Streamable HTTP transport for MCP.
 """
 
+import contextlib
 import logging
 import os
-from contextlib import asynccontextmanager
-from uuid import uuid4
 
 from dotenv import load_dotenv
-from mcp.server.streamable_http import StreamableHTTPServerTransport
+from mcp.server.streamable_http_manager import StreamableHTTPSessionManager
 from starlette.applications import Starlette
+from starlette.middleware.cors import CORSMiddleware
 from starlette.routing import Mount, Route
 from starlette.responses import JSONResponse
+from starlette.types import Receive, Scope, Send
 import uvicorn
 
 from .mcp_server import create_mcp_server
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
-# Store active transports by session ID
-transports: dict[str, StreamableHTTPServerTransport] = {}
 
 
 async def health_check(request):
@@ -42,64 +40,47 @@ def create_app() -> Starlette:
     # Create MCP server
     mcp_server = create_mcp_server()
 
-    async def handle_mcp(request):
-        """Handle MCP requests using Streamable HTTP transport."""
-        # Check for existing session
-        session_id = request.headers.get("mcp-session-id")
+    # Create the session manager with stateless mode for scalability
+    session_manager = StreamableHTTPSessionManager(
+        app=mcp_server,
+        json_response=True,  # Use JSON responses instead of SSE
+        stateless=True,  # Stateless mode for Container Apps
+    )
 
-        if session_id and session_id in transports:
-            # Reuse existing transport
-            transport = transports[session_id]
-        else:
-            # Create new transport for this session
-            transport = StreamableHTTPServerTransport(
-                mcp_session_id=str(uuid4()),
-                is_json_response_enabled=True,
-            )
-            transports[transport.mcp_session_id] = transport
+    # ASGI handler for streamable HTTP connections
+    async def handle_streamable_http(scope: Scope, receive: Receive, send: Send) -> None:
+        await session_manager.handle_request(scope, receive, send)
 
-            # Connect transport to server (fire and forget)
-            async def run_server():
-                await mcp_server.run(
-                    transport.read_stream,
-                    transport.write_stream,
-                    mcp_server.create_initialization_options(),
-                )
-
-            import asyncio
-            asyncio.create_task(run_server())
-
-        return await transport.handle_request(request)
-
-    async def handle_mcp_sse(request):
-        """Handle MCP SSE connections."""
-        session_id = request.headers.get("mcp-session-id")
-        if session_id and session_id in transports:
-            transport = transports[session_id]
-            return await transport.handle_sse_request(request)
-        return JSONResponse({"error": "No active session"}, status_code=400)
-
-    @asynccontextmanager
+    @contextlib.asynccontextmanager
     async def lifespan(app: Starlette):
         """Lifespan context manager for the Starlette app."""
         logger.info("Starting Content Understanding MCP Server...")
-        yield
-        # Cleanup transports
-        for transport in transports.values():
-            await transport.close()
-        transports.clear()
-        logger.info("Shutting down MCP Server...")
+        async with session_manager.run():
+            logger.info("MCP Session Manager started!")
+            try:
+                yield
+            finally:
+                logger.info("Shutting down MCP Server...")
 
-    routes = [
-        Route("/health", health_check, methods=["GET"]),
-        Route("/mcp", handle_mcp, methods=["POST", "GET", "DELETE"]),
-    ]
-
-    return Starlette(
+    # Create the Starlette app
+    starlette_app = Starlette(
         debug=True,
-        routes=routes,
+        routes=[
+            Route("/health", health_check, methods=["GET"]),
+            Mount("/mcp", app=handle_streamable_http),
+        ],
         lifespan=lifespan,
     )
+
+    # Wrap with CORS middleware for browser-based clients
+    starlette_app = CORSMiddleware(
+        starlette_app,
+        allow_origins=["*"],
+        allow_methods=["GET", "POST", "DELETE"],
+        expose_headers=["Mcp-Session-Id"],
+    )
+
+    return starlette_app
 
 
 def main():
