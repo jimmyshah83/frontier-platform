@@ -1,215 +1,97 @@
 [
   {
     "id": "policy-001",
+    "document_type": "policy",
     "category": "credit_risk",
     "subcategory": "credit_score",
     "title": "Credit Score Risk Classification",
     "description": "Defines risk levels based on applicant credit score ranges",
+    "content": "Credit Score Risk Classification Policy\n\nThis policy defines risk levels based on applicant credit score ranges for mortgage loan applications.\n\nRisk Classification Rules:\n\n1. Credit Score 750 or higher: LOW RISK - Action: APPROVE\n   Excellent credit. Standard processing. No additional documentation required.\n\n2. Credit Score 700-749: LOW RISK - Action: APPROVE\n   Good credit. Standard processing with routine verification.\n\n3. Credit Score 650-699: MEDIUM RISK - Action: REVIEW\n   Fair credit. Requires senior underwriter review. May require additional income verification.\n\n4. Credit Score 580-649: HIGH RISK - Action: ESCALATE\n   Below average credit. Requires credit committee approval. Consider higher interest rate or larger down payment.\n\n5. Credit Score below 580: CRITICAL RISK - Action: DENY\n   Poor credit. Application should be declined unless exceptional compensating factors exist.\n\nRegulatory Reference: CFPB Fair Lending Guidelines\nEffective Date: January 1, 2025",
     "rules": [
-      {
-        "condition": "credit_score >= 750",
-        "risk_level": "low",
-        "action": "approve",
-        "notes": "Excellent credit. Standard processing. No additional documentation required."
-      },
-      {
-        "condition": "credit_score >= 700 AND credit_score < 750",
-        "risk_level": "low",
-        "action": "approve",
-        "notes": "Good credit. Standard processing with routine verification."
-      },
-      {
-        "condition": "credit_score >= 650 AND credit_score < 700",
-        "risk_level": "medium",
-        "action": "review",
-        "notes": "Fair credit. Requires senior underwriter review. May require additional income verification."
-      },
-      {
-        "condition": "credit_score >= 580 AND credit_score < 650",
-        "risk_level": "high",
-        "action": "escalate",
-        "notes": "Below average credit. Requires credit committee approval. Consider higher interest rate or larger down payment."
-      },
-      {
-        "condition": "credit_score < 580",
-        "risk_level": "critical",
-        "action": "deny",
-        "notes": "Poor credit. Application should be declined unless exceptional compensating factors exist."
-      }
+      {"condition": "credit_score >= 750", "risk_level": "low", "action": "approve", "notes": "Excellent credit. Standard processing. No additional documentation required."},
+      {"condition": "credit_score >= 700 AND credit_score < 750", "risk_level": "low", "action": "approve", "notes": "Good credit. Standard processing with routine verification."},
+      {"condition": "credit_score >= 650 AND credit_score < 700", "risk_level": "medium", "action": "review", "notes": "Fair credit. Requires senior underwriter review. May require additional income verification."},
+      {"condition": "credit_score >= 580 AND credit_score < 650", "risk_level": "high", "action": "escalate", "notes": "Below average credit. Requires credit committee approval. Consider higher interest rate or larger down payment."},
+      {"condition": "credit_score < 580", "risk_level": "critical", "action": "deny", "notes": "Poor credit. Application should be declined unless exceptional compensating factors exist."}
     ],
+    "keywords": ["credit score", "FICO", "credit risk", "underwriting", "loan approval", "credit classification"],
     "effective_date": "2025-01-01",
-    "last_updated": "2026-01-15",
-    "regulatory_reference": "CFPB Fair Lending Guidelines"
+    "last_updated": "2026-01-15"
   },
   {
     "id": "policy-002",
+    "document_type": "policy",
     "category": "credit_risk",
     "subcategory": "debt_to_income",
     "title": "Debt-to-Income Ratio Requirements",
     "description": "Establishes acceptable DTI thresholds for loan approval",
+    "content": "Debt-to-Income Ratio Requirements Policy\n\nThis policy establishes acceptable DTI thresholds for mortgage loan approval. DTI is calculated as Total Monthly Debt Payments divided by Gross Monthly Income multiplied by 100.\n\nRisk Classification Rules:\n\n1. DTI Ratio 28% or less: LOW RISK - Action: APPROVE\n   Housing expense ratio within optimal range. Strong capacity for mortgage payments.\n\n2. DTI Ratio 28.01% to 36%: LOW RISK - Action: APPROVE\n   Total DTI within acceptable range. Standard approval pathway.\n\n3. DTI Ratio 36.01% to 43%: MEDIUM RISK - Action: REVIEW\n   Elevated DTI. Requires compensating factors such as high credit score (>720), substantial reserves (6+ months), or stable employment history (5+ years).\n\n4. DTI Ratio 43.01% to 50%: HIGH RISK - Action: ESCALATE\n   High DTI. Requires exception approval from credit committee. Must document strong compensating factors.\n\n5. DTI Ratio above 50%: CRITICAL RISK - Action: DENY\n   DTI exceeds maximum threshold. Application should be declined.\n\nCalculation Method: (Total Monthly Debt Payments / Gross Monthly Income) × 100\nRegulatory Reference: Qualified Mortgage Rule (QM)",
     "rules": [
-      {
-        "condition": "dti_ratio <= 28",
-        "risk_level": "low",
-        "action": "approve",
-        "notes": "Housing expense ratio within optimal range. Strong capacity for mortgage payments."
-      },
-      {
-        "condition": "dti_ratio > 28 AND dti_ratio <= 36",
-        "risk_level": "low",
-        "action": "approve",
-        "notes": "Total DTI within acceptable range. Standard approval pathway."
-      },
-      {
-        "condition": "dti_ratio > 36 AND dti_ratio <= 43",
-        "risk_level": "medium",
-        "action": "review",
-        "notes": "Elevated DTI. Requires compensating factors such as high credit score (>720), substantial reserves (6+ months), or stable employment history (5+ years)."
-      },
-      {
-        "condition": "dti_ratio > 43 AND dti_ratio <= 50",
-        "risk_level": "high",
-        "action": "escalate",
-        "notes": "High DTI. Requires exception approval from credit committee. Must document strong compensating factors."
-      },
-      {
-        "condition": "dti_ratio > 50",
-        "risk_level": "critical",
-        "action": "deny",
-        "notes": "DTI exceeds maximum threshold. Application should be declined."
-      }
+      {"condition": "dti_ratio <= 28", "risk_level": "low", "action": "approve", "notes": "Housing expense ratio within optimal range. Strong capacity for mortgage payments."},
+      {"condition": "dti_ratio > 28 AND dti_ratio <= 36", "risk_level": "low", "action": "approve", "notes": "Total DTI within acceptable range. Standard approval pathway."},
+      {"condition": "dti_ratio > 36 AND dti_ratio <= 43", "risk_level": "medium", "action": "review", "notes": "Elevated DTI. Requires compensating factors such as high credit score (>720), substantial reserves (6+ months), or stable employment history (5+ years)."},
+      {"condition": "dti_ratio > 43 AND dti_ratio <= 50", "risk_level": "high", "action": "escalate", "notes": "High DTI. Requires exception approval from credit committee. Must document strong compensating factors."},
+      {"condition": "dti_ratio > 50", "risk_level": "critical", "action": "deny", "notes": "DTI exceeds maximum threshold. Application should be declined."}
     ],
-    "calculation_method": "Total Monthly Debt Payments / Gross Monthly Income * 100",
+    "keywords": ["debt to income", "DTI", "income ratio", "debt ratio", "monthly payments", "qualified mortgage"],
     "effective_date": "2025-01-01",
-    "last_updated": "2026-01-15",
-    "regulatory_reference": "Qualified Mortgage Rule (QM)"
+    "last_updated": "2026-01-15"
   },
   {
     "id": "policy-003",
+    "document_type": "policy",
     "category": "credit_risk",
     "subcategory": "loan_to_value",
     "title": "Loan-to-Value Ratio Guidelines",
     "description": "Defines LTV thresholds and corresponding requirements",
+    "content": "Loan-to-Value Ratio Guidelines Policy\n\nThis policy defines LTV thresholds and corresponding requirements for mortgage loans. LTV is calculated as Loan Amount divided by Property Value multiplied by 100.\n\nRisk Classification Rules:\n\n1. LTV Ratio 80% or less: LOW RISK - Action: APPROVE\n   Standard LTV. No PMI required. Favorable terms available.\n\n2. LTV Ratio 80.01% to 90%: MEDIUM RISK - Action: APPROVE WITH CONDITIONS\n   Elevated LTV. Private Mortgage Insurance (PMI) required. Minimum credit score of 680.\n\n3. LTV Ratio 90.01% to 95%: HIGH RISK - Action: REVIEW\n   High LTV. PMI required. Minimum credit score of 720. Maximum DTI of 41%. Requires senior underwriter approval.\n\n4. LTV Ratio 95.01% to 97%: HIGH RISK - Action: ESCALATE\n   Very high LTV. Only available for first-time homebuyers. Credit score minimum 740. Requires credit committee approval.\n\n5. LTV Ratio above 97%: CRITICAL RISK - Action: DENY\n   LTV exceeds maximum allowable threshold. Consider FHA or VA loan programs if eligible.\n\nCalculation Method: (Loan Amount / Property Value) × 100",
     "rules": [
-      {
-        "condition": "ltv_ratio <= 80",
-        "risk_level": "low",
-        "action": "approve",
-        "notes": "Standard LTV. No PMI required. Favorable terms available."
-      },
-      {
-        "condition": "ltv_ratio > 80 AND ltv_ratio <= 90",
-        "risk_level": "medium",
-        "action": "approve_with_conditions",
-        "notes": "Elevated LTV. Private Mortgage Insurance (PMI) required. Minimum credit score of 680."
-      },
-      {
-        "condition": "ltv_ratio > 90 AND ltv_ratio <= 95",
-        "risk_level": "high",
-        "action": "review",
-        "notes": "High LTV. PMI required. Minimum credit score of 720. Maximum DTI of 41%. Requires senior underwriter approval."
-      },
-      {
-        "condition": "ltv_ratio > 95 AND ltv_ratio <= 97",
-        "risk_level": "high",
-        "action": "escalate",
-        "notes": "Very high LTV. Only available for first-time homebuyers. Credit score minimum 740. Requires credit committee approval."
-      },
-      {
-        "condition": "ltv_ratio > 97",
-        "risk_level": "critical",
-        "action": "deny",
-        "notes": "LTV exceeds maximum allowable threshold. Consider FHA or VA loan programs if eligible."
-      }
+      {"condition": "ltv_ratio <= 80", "risk_level": "low", "action": "approve", "notes": "Standard LTV. No PMI required. Favorable terms available."},
+      {"condition": "ltv_ratio > 80 AND ltv_ratio <= 90", "risk_level": "medium", "action": "approve_with_conditions", "notes": "Elevated LTV. Private Mortgage Insurance (PMI) required. Minimum credit score of 680."},
+      {"condition": "ltv_ratio > 90 AND ltv_ratio <= 95", "risk_level": "high", "action": "review", "notes": "High LTV. PMI required. Minimum credit score of 720. Maximum DTI of 41%. Requires senior underwriter approval."},
+      {"condition": "ltv_ratio > 95 AND ltv_ratio <= 97", "risk_level": "high", "action": "escalate", "notes": "Very high LTV. Only available for first-time homebuyers. Credit score minimum 740. Requires credit committee approval."},
+      {"condition": "ltv_ratio > 97", "risk_level": "critical", "action": "deny", "notes": "LTV exceeds maximum allowable threshold. Consider FHA or VA loan programs if eligible."}
     ],
-    "calculation_method": "Loan Amount / Property Value * 100",
+    "keywords": ["loan to value", "LTV", "property value", "down payment", "PMI", "private mortgage insurance", "equity"],
     "effective_date": "2025-01-01",
-    "last_updated": "2026-01-15",
-    "regulatory_reference": "Fannie Mae Selling Guide"
+    "last_updated": "2026-01-15"
   },
   {
     "id": "policy-004",
+    "document_type": "policy",
     "category": "credit_risk",
     "subcategory": "employment_stability",
     "title": "Employment History Requirements",
     "description": "Evaluates employment stability as a credit risk factor",
+    "content": "Employment History Requirements Policy\n\nThis policy evaluates employment stability as a credit risk factor for mortgage loan applications.\n\nRisk Classification Rules:\n\n1. Full-time employment for 5+ years: LOW RISK - Action: APPROVE\n   Strong employment stability. Positive factor for loan approval.\n\n2. Full-time employment for 2-5 years: LOW RISK - Action: APPROVE\n   Adequate employment history. Standard verification required.\n\n3. Full-time employment for 1-2 years: MEDIUM RISK - Action: REVIEW\n   Limited employment history. Require previous employer verification. Consider industry stability.\n\n4. Full-time employment less than 1 year OR Part-time: HIGH RISK - Action: ESCALATE\n   Insufficient employment history or part-time status. Requires additional income documentation and credit committee review.\n\n5. Self-employed: MEDIUM RISK - Action: REVIEW\n   Self-employed applicants require 2 years of tax returns, profit/loss statements, and business verification.\n\n6. Unemployed: CRITICAL RISK - Action: DENY\n   No current employment. Application should be declined unless substantial passive income or assets exist.",
     "rules": [
-      {
-        "condition": "years_employed >= 5 AND employment_status = 'full_time'",
-        "risk_level": "low",
-        "action": "approve",
-        "notes": "Strong employment stability. Positive factor for loan approval."
-      },
-      {
-        "condition": "years_employed >= 2 AND years_employed < 5 AND employment_status = 'full_time'",
-        "risk_level": "low",
-        "action": "approve",
-        "notes": "Adequate employment history. Standard verification required."
-      },
-      {
-        "condition": "years_employed >= 1 AND years_employed < 2 AND employment_status = 'full_time'",
-        "risk_level": "medium",
-        "action": "review",
-        "notes": "Limited employment history. Require previous employer verification. Consider industry stability."
-      },
-      {
-        "condition": "years_employed < 1 OR employment_status = 'part_time'",
-        "risk_level": "high",
-        "action": "escalate",
-        "notes": "Insufficient employment history or part-time status. Requires additional income documentation and credit committee review."
-      },
-      {
-        "condition": "employment_status = 'self_employed'",
-        "risk_level": "medium",
-        "action": "review",
-        "notes": "Self-employed applicants require 2 years of tax returns, profit/loss statements, and business verification."
-      },
-      {
-        "condition": "employment_status = 'unemployed'",
-        "risk_level": "critical",
-        "action": "deny",
-        "notes": "No current employment. Application should be declined unless substantial passive income or assets exist."
-      }
+      {"condition": "years_employed >= 5 AND employment_status = 'full_time'", "risk_level": "low", "action": "approve", "notes": "Strong employment stability. Positive factor for loan approval."},
+      {"condition": "years_employed >= 2 AND years_employed < 5 AND employment_status = 'full_time'", "risk_level": "low", "action": "approve", "notes": "Adequate employment history. Standard verification required."},
+      {"condition": "years_employed >= 1 AND years_employed < 2 AND employment_status = 'full_time'", "risk_level": "medium", "action": "review", "notes": "Limited employment history. Require previous employer verification."},
+      {"condition": "years_employed < 1 OR employment_status = 'part_time'", "risk_level": "high", "action": "escalate", "notes": "Insufficient employment history or part-time status. Requires additional income documentation."},
+      {"condition": "employment_status = 'self_employed'", "risk_level": "medium", "action": "review", "notes": "Self-employed applicants require 2 years of tax returns, profit/loss statements, and business verification."},
+      {"condition": "employment_status = 'unemployed'", "risk_level": "critical", "action": "deny", "notes": "No current employment. Application should be declined unless substantial passive income or assets exist."}
     ],
+    "keywords": ["employment", "job history", "work history", "income stability", "self-employed", "full-time", "part-time"],
     "effective_date": "2025-01-01",
-    "last_updated": "2026-01-15",
-    "regulatory_reference": "Fannie Mae Selling Guide Section B3-3"
+    "last_updated": "2026-01-15"
   },
   {
     "id": "policy-005",
+    "document_type": "policy",
     "category": "credit_risk",
     "subcategory": "reserves",
     "title": "Cash Reserve Requirements",
     "description": "Minimum reserve requirements based on loan type and risk factors",
+    "content": "Cash Reserve Requirements Policy\n\nThis policy establishes minimum cash reserve requirements based on loan type and risk factors. Reserves are calculated as Liquid Assets divided by total monthly payments (mortgage plus debt).\n\nRisk Classification Rules:\n\n1. Reserves 6+ months: LOW RISK - Action: APPROVE\n   Strong reserves. Positive compensating factor. Can offset other risk factors.\n\n2. Reserves 3-6 months: LOW RISK - Action: APPROVE\n   Adequate reserves for standard conventional loans.\n\n3. Reserves 2-3 months: MEDIUM RISK - Action: REVIEW\n   Minimum reserves. Acceptable for primary residence with strong credit profile.\n\n4. Reserves less than 2 months: HIGH RISK - Action: ESCALATE\n   Insufficient reserves. Requires compensating factors such as gift funds documentation or salary increase letter.\n\nNote: 12+ months of reserves is a strong compensating factor that can offset other moderate risk factors.\n\nCalculation Method: Liquid Assets / (Monthly Mortgage Payment + Monthly Debt Payments)",
     "rules": [
-      {
-        "condition": "reserves_months >= 6",
-        "risk_level": "low",
-        "action": "approve",
-        "notes": "Strong reserves. Positive compensating factor. Can offset other risk factors."
-      },
-      {
-        "condition": "reserves_months >= 3 AND reserves_months < 6",
-        "risk_level": "low",
-        "action": "approve",
-        "notes": "Adequate reserves for standard conventional loans."
-      },
-      {
-        "condition": "reserves_months >= 2 AND reserves_months < 3",
-        "risk_level": "medium",
-        "action": "review",
-        "notes": "Minimum reserves. Acceptable for primary residence with strong credit profile."
-      },
-      {
-        "condition": "reserves_months < 2",
-        "risk_level": "high",
-        "action": "escalate",
-        "notes": "Insufficient reserves. Requires compensating factors such as gift funds documentation or salary increase letter."
-      }
+      {"condition": "reserves_months >= 6", "risk_level": "low", "action": "approve", "notes": "Strong reserves. Positive compensating factor. Can offset other risk factors."},
+      {"condition": "reserves_months >= 3 AND reserves_months < 6", "risk_level": "low", "action": "approve", "notes": "Adequate reserves for standard conventional loans."},
+      {"condition": "reserves_months >= 2 AND reserves_months < 3", "risk_level": "medium", "action": "review", "notes": "Minimum reserves. Acceptable for primary residence with strong credit profile."},
+      {"condition": "reserves_months < 2", "risk_level": "high", "action": "escalate", "notes": "Insufficient reserves. Requires compensating factors such as gift funds documentation or salary increase letter."}
     ],
-    "calculation_method": "Liquid Assets / (Monthly Mortgage Payment + Monthly Debt Payments)",
+    "keywords": ["cash reserves", "liquid assets", "savings", "emergency fund", "months reserves", "financial cushion"],
     "effective_date": "2025-01-01",
-    "last_updated": "2026-01-15",
-    "regulatory_reference": "Fannie Mae Selling Guide Section B3-4"
+    "last_updated": "2026-01-15"
   }
 ]

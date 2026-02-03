@@ -1,198 +1,62 @@
 [
   {
     "id": "reg-001",
-    "regulation": "Qualified Mortgage (QM) Rule",
-    "issuing_authority": "Consumer Financial Protection Bureau (CFPB)",
-    "effective_date": "2021-03-01",
+    "document_type": "regulation",
     "category": "lending_requirements",
-    "description": "Establishes ability-to-repay requirements and defines qualified mortgages that receive legal protections",
-    "key_requirements": [
-      {
-        "requirement": "DTI Threshold",
-        "rule": "For General QM loans, lenders must verify and document the consumer's debt-to-income ratio or residual income",
-        "threshold": "No fixed DTI cap; replaced with price-based approach",
-        "notes": "Loans must not exceed APR threshold to qualify for QM safe harbor"
-      },
-      {
-        "requirement": "Income Verification",
-        "rule": "Lenders must verify income and assets using third-party records",
-        "acceptable_documentation": [
-          "Tax returns",
-          "W-2 forms",
-          "Payroll statements",
-          "Financial institution records"
-        ]
-      },
-      {
-        "requirement": "Loan Features",
-        "rule": "QM loans cannot have certain risky features",
-        "prohibited_features": [
-          "Negative amortization",
-          "Interest-only payments",
-          "Balloon payments (with exceptions)",
-          "Loan terms exceeding 30 years",
-          "Points and fees exceeding 3% of loan amount"
-        ]
-      }
-    ],
-    "risk_implications": {
-      "compliant_loans": "Receive safe harbor or rebuttable presumption of compliance with ATR rule",
-      "non_compliant_loans": "Subject to borrower legal challenge on ability-to-repay determination"
-    },
-    "reference_url": "https://www.consumerfinance.gov/rules-policy/regulations/1026/43/"
+    "subcategory": "qualified_mortgage",
+    "title": "Qualified Mortgage (QM) Rule",
+    "description": "Establishes ability-to-repay requirements and defines qualified mortgages",
+    "content": "Qualified Mortgage (QM) Rule - Consumer Financial Protection Bureau (CFPB)\n\nEffective Date: March 1, 2021\n\nOVERVIEW:\nThe QM Rule establishes ability-to-repay requirements. Lenders must make a reasonable, good-faith determination that a borrower can repay the loan.\n\nKEY REQUIREMENTS:\n\n1. DTI THRESHOLD\nLenders must verify and document debt-to-income ratio. No fixed cap; price-based approach used. Loans must not exceed APR threshold for safe harbor.\n\n2. INCOME VERIFICATION\nMust verify income using third-party records:\n- Tax returns\n- W-2 forms\n- Payroll statements\n- Financial institution records\n\n3. PROHIBITED LOAN FEATURES\nQM loans cannot have:\n- Negative amortization\n- Interest-only payments\n- Balloon payments\n- Terms exceeding 30 years\n- Points/fees exceeding 3%\n\nRISK IMPLICATIONS:\n- Compliant loans get safe harbor protection\n- Non-compliant subject to borrower legal challenge",
+    "keywords": ["qualified mortgage", "QM", "ability to repay", "ATR", "CFPB", "DTI", "income verification", "safe harbor"],
+    "issuing_authority": "Consumer Financial Protection Bureau (CFPB)",
+    "effective_date": "2021-03-01"
   },
   {
     "id": "reg-002",
-    "regulation": "Fair Housing Act",
-    "issuing_authority": "Department of Housing and Urban Development (HUD)",
-    "effective_date": "1968-04-11",
+    "document_type": "regulation",
     "category": "fair_lending",
+    "subcategory": "discrimination",
+    "title": "Fair Housing Act",
     "description": "Prohibits discrimination in housing-related transactions including mortgage lending",
-    "key_requirements": [
-      {
-        "requirement": "Protected Classes",
-        "rule": "Cannot discriminate based on protected characteristics",
-        "protected_classes": [
-          "Race",
-          "Color",
-          "National origin",
-          "Religion",
-          "Sex",
-          "Familial status",
-          "Disability"
-        ]
-      },
-      {
-        "requirement": "Prohibited Practices",
-        "rule": "Specific lending practices that are prohibited",
-        "prohibited_practices": [
-          "Refusing to make mortgage loans",
-          "Refusing to provide lending information",
-          "Imposing different terms or conditions",
-          "Discriminating in appraising property",
-          "Redlining"
-        ]
-      }
-    ],
-    "risk_implications": {
-      "compliance": "All lending decisions must be based on creditworthiness factors only",
-      "violations": "Subject to civil penalties, lawsuits, and regulatory action"
-    },
-    "reference_url": "https://www.hud.gov/program_offices/fair_housing_equal_opp/fair_housing_act_overview"
+    "content": "Fair Housing Act - Department of Housing and Urban Development (HUD)\n\nEffective Date: April 11, 1968\n\nOVERVIEW:\nProhibits discrimination in housing transactions. All lending decisions must be based solely on creditworthiness factors.\n\nPROTECTED CLASSES:\nCannot discriminate based on:\n- Race\n- Color\n- National origin\n- Religion\n- Sex\n- Familial status\n- Disability\n\nPROHIBITED PRACTICES:\n- Refusing mortgage loans based on protected characteristics\n- Refusing lending information\n- Different terms/conditions based on protected class\n- Discriminating in property appraisal\n- Redlining neighborhoods\n\nUNDERWRITER GUIDANCE:\nFocus only on creditworthiness factors: credit score, income, employment, DTI, LTV, payment history. Never consider protected characteristics.\n\nVIOLATIONS:\nSubject to civil penalties, lawsuits, regulatory action.",
+    "keywords": ["fair housing", "discrimination", "protected class", "fair lending", "HUD", "redlining", "equal opportunity"],
+    "issuing_authority": "Department of Housing and Urban Development (HUD)",
+    "effective_date": "1968-04-11"
   },
   {
     "id": "reg-003",
-    "regulation": "TILA-RESPA Integrated Disclosure (TRID)",
-    "issuing_authority": "Consumer Financial Protection Bureau (CFPB)",
-    "effective_date": "2015-10-03",
+    "document_type": "regulation",
     "category": "disclosure_requirements",
-    "description": "Requires specific disclosures to consumers for residential mortgage transactions",
-    "key_requirements": [
-      {
-        "requirement": "Loan Estimate",
-        "rule": "Must be provided within 3 business days of receiving application",
-        "content": [
-          "Loan terms",
-          "Projected payments",
-          "Costs at closing",
-          "Comparisons to help shopping"
-        ]
-      },
-      {
-        "requirement": "Closing Disclosure",
-        "rule": "Must be provided at least 3 business days before closing",
-        "content": [
-          "Final loan terms",
-          "Final closing costs",
-          "Summaries of transactions"
-        ]
-      },
-      {
-        "requirement": "Timing Requirements",
-        "rule": "Specific waiting periods must be observed",
-        "details": "Changes to APR, loan product, or prepayment penalty require new 3-day waiting period"
-      }
-    ],
-    "risk_implications": {
-      "compliance": "Proper disclosures protect lender from rescission and liability",
-      "violations": "Consumer may have extended right to rescind; regulatory penalties"
-    },
-    "reference_url": "https://www.consumerfinance.gov/rules-policy/regulations/1026/19/"
+    "subcategory": "closing_disclosure",
+    "title": "TILA-RESPA Integrated Disclosure (TRID)",
+    "description": "Requires specific disclosures for residential mortgage transactions",
+    "content": "TILA-RESPA Integrated Disclosure (TRID) - CFPB\n\nEffective Date: October 3, 2015\n\nOVERVIEW:\nRequires specific disclosures to help consumers understand loan terms.\n\nLOAN ESTIMATE:\nProvide within 3 business days of application:\n- Loan terms\n- Projected payments\n- Closing costs\n- Comparison information\n\nCLOSING DISCLOSURE:\nProvide at least 3 business days before closing:\n- Final loan terms\n- Final closing costs\n- Transaction summaries\n\nTIMING REQUIREMENTS:\n- 3 days for Loan Estimate\n- 3 days before closing for Closing Disclosure\n- New 3-day wait if APR, product, or prepayment penalty changes\n\nVIOLATIONS:\nExtended rescission rights, regulatory penalties.",
+    "keywords": ["TRID", "TILA", "RESPA", "loan estimate", "closing disclosure", "waiting period", "3 business days"],
+    "issuing_authority": "Consumer Financial Protection Bureau (CFPB)",
+    "effective_date": "2015-10-03"
   },
   {
     "id": "reg-004",
-    "regulation": "Home Mortgage Disclosure Act (HMDA)",
-    "issuing_authority": "Consumer Financial Protection Bureau (CFPB)",
-    "effective_date": "1975-12-31",
+    "document_type": "regulation",
     "category": "reporting_requirements",
-    "description": "Requires collection and reporting of mortgage lending data to identify discriminatory practices",
-    "key_requirements": [
-      {
-        "requirement": "Data Collection",
-        "rule": "Must collect and report specific data points on mortgage applications",
-        "data_points": [
-          "Applicant demographics",
-          "Loan amount and type",
-          "Property location",
-          "Loan pricing information",
-          "Denial reasons",
-          "Credit score relied upon"
-        ]
-      },
-      {
-        "requirement": "Reporting Timeline",
-        "rule": "Annual submission required by March 1 for prior calendar year",
-        "format": "Loan/Application Register (LAR)"
-      }
-    ],
-    "risk_implications": {
-      "compliance": "Data used by regulators to monitor fair lending compliance",
-      "violations": "Regulatory examination, civil money penalties"
-    },
-    "reference_url": "https://www.consumerfinance.gov/data-research/hmda/"
+    "subcategory": "data_collection",
+    "title": "Home Mortgage Disclosure Act (HMDA)",
+    "description": "Requires collection and reporting of mortgage lending data",
+    "content": "Home Mortgage Disclosure Act (HMDA) - CFPB\n\nEffective Date: December 31, 1975\n\nOVERVIEW:\nRequires collection and reporting of mortgage data to identify discriminatory practices.\n\nDATA COLLECTION:\nMust collect and report:\n- Applicant demographics\n- Loan amount and type\n- Property location\n- Loan pricing\n- Denial reasons\n- Credit score used\n\nREPORTING:\n- Annual submission by March 1\n- Loan/Application Register (LAR) format\n- Submitted to CFPB\n- Data publicly available\n\nPURPOSE:\n- Monitor fair lending compliance\n- Identify discrimination patterns\n- Inform community investment\n\nVIOLATIONS:\nRegulatory examination, civil money penalties.",
+    "keywords": ["HMDA", "data collection", "reporting", "demographics", "fair lending", "LAR"],
+    "issuing_authority": "Consumer Financial Protection Bureau (CFPB)",
+    "effective_date": "1975-12-31"
   },
   {
     "id": "reg-005",
-    "regulation": "Fannie Mae Selling Guide",
-    "issuing_authority": "Federal National Mortgage Association (Fannie Mae)",
-    "effective_date": "ongoing",
+    "document_type": "regulation",
     "category": "secondary_market_requirements",
-    "description": "Requirements for loans to be eligible for purchase by Fannie Mae",
-    "key_requirements": [
-      {
-        "requirement": "Credit Requirements",
-        "rule": "Minimum credit standards for conventional conforming loans",
-        "details": {
-          "minimum_credit_score": 620,
-          "maximum_dti": "45% with DU approval, 50% with compensating factors",
-          "maximum_ltv": "97% for primary residence"
-        }
-      },
-      {
-        "requirement": "Property Requirements",
-        "rule": "Property must meet eligibility criteria",
-        "eligible_properties": [
-          "Single-family residences",
-          "2-4 unit properties (owner-occupied)",
-          "Condominiums (with approval)",
-          "PUDs"
-        ]
-      },
-      {
-        "requirement": "Documentation Standards",
-        "rule": "Specific documentation required for all loans",
-        "requirements": [
-          "Income verification per DU findings",
-          "Asset verification",
-          "Employment verification",
-          "Appraisal requirements"
-        ]
-      }
-    ],
-    "risk_implications": {
-      "compliance": "Loans eligible for sale to Fannie Mae provide liquidity",
-      "non_compliance": "Loans may need to be held in portfolio or sold at discount"
-    },
-    "reference_url": "https://singlefamily.fanniemae.com/media/document/pdf/selling-guide"
+    "subcategory": "fannie_mae",
+    "title": "Fannie Mae Selling Guide",
+    "description": "Requirements for loans eligible for Fannie Mae purchase",
+    "content": "Fannie Mae Selling Guide - Federal National Mortgage Association\n\nOVERVIEW:\nRequirements for loans eligible for Fannie Mae purchase, providing lender liquidity.\n\nCREDIT REQUIREMENTS:\n- Minimum Credit Score: 620\n- Maximum DTI: 45% (DU), 50% with compensating factors\n- Maximum LTV: 97% primary residence\n\nPROPERTY TYPES:\n- Single-family residences\n- 2-4 unit (owner-occupied)\n- Condos (with approval)\n- PUDs\n\nDOCUMENTATION:\n- Income per Desktop Underwriter findings\n- Asset verification\n- Employment verification\n- Compliant appraisal\n\nWAITING PERIODS:\n- Bankruptcy Chapter 7: 4 years from discharge\n- Foreclosure: 7 years\n- Short Sale: 4 years\n- Deed-in-lieu: 4 years\n\nNON-COMPLIANCE:\nLoans held in portfolio or sold at discount.",
+    "keywords": ["Fannie Mae", "selling guide", "conforming loan", "secondary market", "DU", "conventional", "waiting period", "bankruptcy"],
+    "issuing_authority": "Federal National Mortgage Association (Fannie Mae)",
+    "effective_date": "ongoing"
   }
 ]

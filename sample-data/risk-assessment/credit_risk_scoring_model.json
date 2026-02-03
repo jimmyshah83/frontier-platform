@@ -1,141 +1,29 @@
 {
   "id": "scoring-model-001",
-  "name": "Credit Risk Scoring Model",
+  "document_type": "scoring_model",
+  "category": "credit_risk",
+  "subcategory": "scoring",
+  "title": "Credit Risk Scoring Model",
+  "description": "Comprehensive credit risk scoring model for mortgage loan applications",
+  "content": "Credit Risk Scoring Model v2.0\n\nThis comprehensive credit risk scoring model calculates an aggregate risk score for mortgage loan applications based on multiple weighted factors.\n\nSCORING FACTORS AND WEIGHTS:\n\n1. Credit Score (30% weight)\n   - 750-850: 100 points (Excellent)\n   - 700-749: 80 points (Good)\n   - 650-699: 60 points (Fair)\n   - 580-649: 40 points (Below Average)\n   - 300-579: 20 points (Poor)\n\n2. Debt-to-Income Ratio (25% weight)\n   - 0-28%: 100 points (Optimal)\n   - 28-36%: 80 points (Acceptable)\n   - 36-43%: 60 points (Elevated)\n   - 43-50%: 40 points (High)\n   - 50%+: 20 points (Excessive)\n\n3. Loan-to-Value Ratio (20% weight)\n   - 0-80%: 100 points (Standard)\n   - 80-90%: 75 points (Elevated)\n   - 90-95%: 50 points (High)\n   - 95-97%: 25 points (Very High)\n   - 97%+: 10 points (Maximum)\n\n4. Employment Stability (15% weight)\n   - 5+ years: 100 points (Highly Stable)\n   - 2-5 years: 80 points (Stable)\n   - 1-2 years: 60 points (Developing)\n   - 0-1 year: 40 points (New)\n\n5. Cash Reserves (10% weight)\n   - 12+ months: 100 points (Substantial)\n   - 6-12 months: 85 points (Strong)\n   - 3-6 months: 70 points (Adequate)\n   - 2-3 months: 50 points (Minimum)\n   - 0-2 months: 25 points (Insufficient)\n\nRISK CLASSIFICATION THRESHOLDS:\n- Score 85-100: LOW RISK - Recommend APPROVE\n- Score 70-84: LOW-MEDIUM RISK - Recommend APPROVE\n- Score 55-69: MEDIUM RISK - Recommend REVIEW\n- Score 40-54: HIGH RISK - Recommend ESCALATE\n- Score 0-39: CRITICAL RISK - Recommend DENY\n\nCOMPENSATING FACTORS (Bonus Points):\n- Exceptional credit score (760+): +5 points\n- Substantial reserves (12+ months): +5 points\n- Low LTV (70% or less): +5 points\n- Long employment (10+ years): +3 points\n- Primary residence: +2 points\n\nNEGATIVE FACTORS (Penalty Points):\n- Recent late payments in past 12 months: -10 points\n- High credit utilization (50%+): -5 points\n- Employment gap (3+ months): -5 points\n- Multiple credit inquiries (4+ in 6 months): -5 points",
+  "keywords": ["risk score", "scoring model", "weighted factors", "credit risk calculation", "underwriting model", "risk classification", "compensating factors"],
   "version": "2.0",
-  "description": "Comprehensive credit risk scoring model for mortgage loan applications. Calculates aggregate risk score based on multiple factors.",
   "effective_date": "2025-01-01",
   "last_updated": "2026-01-15",
   "scoring_factors": [
-    {
-      "factor_id": "F001",
-      "factor_name": "credit_score",
-      "weight": 0.30,
-      "description": "Applicant's FICO credit score",
-      "scoring_tiers": [
-        {"min": 750, "max": 850, "points": 100, "label": "Excellent"},
-        {"min": 700, "max": 749, "points": 80, "label": "Good"},
-        {"min": 650, "max": 699, "points": 60, "label": "Fair"},
-        {"min": 580, "max": 649, "points": 40, "label": "Below Average"},
-        {"min": 300, "max": 579, "points": 20, "label": "Poor"}
-      ]
-    },
-    {
-      "factor_id": "F002",
-      "factor_name": "debt_to_income_ratio",
-      "weight": 0.25,
-      "description": "Total monthly debt payments divided by gross monthly income",
-      "scoring_tiers": [
-        {"min": 0, "max": 28, "points": 100, "label": "Optimal"},
-        {"min": 28.01, "max": 36, "points": 80, "label": "Acceptable"},
-        {"min": 36.01, "max": 43, "points": 60, "label": "Elevated"},
-        {"min": 43.01, "max": 50, "points": 40, "label": "High"},
-        {"min": 50.01, "max": 100, "points": 20, "label": "Excessive"}
-      ]
-    },
-    {
-      "factor_id": "F003",
-      "factor_name": "loan_to_value_ratio",
-      "weight": 0.20,
-      "description": "Loan amount divided by property value",
-      "scoring_tiers": [
-        {"min": 0, "max": 80, "points": 100, "label": "Standard"},
-        {"min": 80.01, "max": 90, "points": 75, "label": "Elevated"},
-        {"min": 90.01, "max": 95, "points": 50, "label": "High"},
-        {"min": 95.01, "max": 97, "points": 25, "label": "Very High"},
-        {"min": 97.01, "max": 100, "points": 10, "label": "Maximum"}
-      ]
-    },
-    {
-      "factor_id": "F004",
-      "factor_name": "employment_stability",
-      "weight": 0.15,
-      "description": "Years at current employer and employment type",
-      "scoring_tiers": [
-        {"min": 5, "max": 99, "points": 100, "label": "Highly Stable"},
-        {"min": 2, "max": 4.99, "points": 80, "label": "Stable"},
-        {"min": 1, "max": 1.99, "points": 60, "label": "Developing"},
-        {"min": 0, "max": 0.99, "points": 40, "label": "New"}
-      ]
-    },
-    {
-      "factor_id": "F005",
-      "factor_name": "cash_reserves",
-      "weight": 0.10,
-      "description": "Months of payment reserves available",
-      "scoring_tiers": [
-        {"min": 12, "max": 999, "points": 100, "label": "Substantial"},
-        {"min": 6, "max": 11.99, "points": 85, "label": "Strong"},
-        {"min": 3, "max": 5.99, "points": 70, "label": "Adequate"},
-        {"min": 2, "max": 2.99, "points": 50, "label": "Minimum"},
-        {"min": 0, "max": 1.99, "points": 25, "label": "Insufficient"}
-      ]
-    }
+    {"factor_id": "F001", "factor_name": "credit_score", "weight": 0.30, "description": "Applicant's FICO credit score"},
+    {"factor_id": "F002", "factor_name": "debt_to_income_ratio", "weight": 0.25, "description": "Total monthly debt payments divided by gross monthly income"},
+    {"factor_id": "F003", "factor_name": "loan_to_value_ratio", "weight": 0.20, "description": "Loan amount divided by property value"},
+    {"factor_id": "F004", "factor_name": "employment_stability", "weight": 0.15, "description": "Years at current employer and employment type"},
+    {"factor_id": "F005", "factor_name": "cash_reserves", "weight": 0.10, "description": "Months of payment reserves available"}
   ],
   "risk_classification": {
     "thresholds": [
-      {"min_score": 85, "max_score": 100, "risk_level": "low", "recommendation": "approve", "description": "Low risk. Eligible for best rates and terms."},
-      {"min_score": 70, "max_score": 84.99, "risk_level": "low_medium", "recommendation": "approve", "description": "Low-medium risk. Standard approval with competitive rates."},
-      {"min_score": 55, "max_score": 69.99, "risk_level": "medium", "recommendation": "review", "description": "Medium risk. Requires underwriter review and may need compensating factors."},
-      {"min_score": 40, "max_score": 54.99, "risk_level": "high", "recommendation": "escalate", "description": "High risk. Requires credit committee approval. Consider risk-based pricing."},
-      {"min_score": 0, "max_score": 39.99, "risk_level": "critical", "recommendation": "deny", "description": "Critical risk. Application should be declined."}
+      {"min_score": 85, "max_score": 100, "risk_level": "low", "recommendation": "approve"},
+      {"min_score": 70, "max_score": 84.99, "risk_level": "low_medium", "recommendation": "approve"},
+      {"min_score": 55, "max_score": 69.99, "risk_level": "medium", "recommendation": "review"},
+      {"min_score": 40, "max_score": 54.99, "risk_level": "high", "recommendation": "escalate"},
+      {"min_score": 0, "max_score": 39.99, "risk_level": "critical", "recommendation": "deny"}
     ]
-  },
-  "compensating_factors": [
-    {
-      "factor": "high_credit_score",
-      "condition": "credit_score >= 760",
-      "bonus_points": 5,
-      "description": "Exceptional credit score provides additional safety margin"
-    },
-    {
-      "factor": "substantial_reserves",
-      "condition": "reserves_months >= 12",
-      "bonus_points": 5,
-      "description": "12+ months of reserves demonstrates strong financial position"
-    },
-    {
-      "factor": "low_ltv",
-      "condition": "ltv_ratio <= 70",
-      "bonus_points": 5,
-      "description": "Significant equity reduces default risk"
-    },
-    {
-      "factor": "long_employment",
-      "condition": "years_employed >= 10",
-      "bonus_points": 3,
-      "description": "Exceptional employment stability"
-    },
-    {
-      "factor": "primary_residence",
-      "condition": "property_use = 'primary_residence'",
-      "bonus_points": 2,
-      "description": "Owner-occupied properties have lower default rates"
-    }
-  ],
-  "negative_factors": [
-    {
-      "factor": "recent_late_payments",
-      "condition": "late_payments_12_months > 0",
-      "penalty_points": -10,
-      "description": "Recent payment delinquencies indicate elevated risk"
-    },
-    {
-      "factor": "high_credit_utilization",
-      "condition": "credit_utilization > 50",
-      "penalty_points": -5,
-      "description": "High revolving credit usage indicates financial stress"
-    },
-    {
-      "factor": "job_gap",
-      "condition": "employment_gap_months > 3",
-      "penalty_points": -5,
-      "description": "Recent employment gap may indicate instability"
-    },
-    {
-      "factor": "multiple_credit_inquiries",
-      "condition": "credit_inquiries_6_months > 4",
-      "penalty_points": -5,
-      "description": "Multiple recent credit applications suggest financial stress"
-    }
-  ]
+  }
 }
