@@ -1,0 +1,215 @@
+[
+  {
+    "id": "policy-001",
+    "category": "credit_risk",
+    "subcategory": "credit_score",
+    "title": "Credit Score Risk Classification",
+    "description": "Defines risk levels based on applicant credit score ranges",
+    "rules": [
+      {
+        "condition": "credit_score >= 750",
+        "risk_level": "low",
+        "action": "approve",
+        "notes": "Excellent credit. Standard processing. No additional documentation required."
+      },
+      {
+        "condition": "credit_score >= 700 AND credit_score < 750",
+        "risk_level": "low",
+        "action": "approve",
+        "notes": "Good credit. Standard processing with routine verification."
+      },
+      {
+        "condition": "credit_score >= 650 AND credit_score < 700",
+        "risk_level": "medium",
+        "action": "review",
+        "notes": "Fair credit. Requires senior underwriter review. May require additional income verification."
+      },
+      {
+        "condition": "credit_score >= 580 AND credit_score < 650",
+        "risk_level": "high",
+        "action": "escalate",
+        "notes": "Below average credit. Requires credit committee approval. Consider higher interest rate or larger down payment."
+      },
+      {
+        "condition": "credit_score < 580",
+        "risk_level": "critical",
+        "action": "deny",
+        "notes": "Poor credit. Application should be declined unless exceptional compensating factors exist."
+      }
+    ],
+    "effective_date": "2025-01-01",
+    "last_updated": "2026-01-15",
+    "regulatory_reference": "CFPB Fair Lending Guidelines"
+  },
+  {
+    "id": "policy-002",
+    "category": "credit_risk",
+    "subcategory": "debt_to_income",
+    "title": "Debt-to-Income Ratio Requirements",
+    "description": "Establishes acceptable DTI thresholds for loan approval",
+    "rules": [
+      {
+        "condition": "dti_ratio <= 28",
+        "risk_level": "low",
+        "action": "approve",
+        "notes": "Housing expense ratio within optimal range. Strong capacity for mortgage payments."
+      },
+      {
+        "condition": "dti_ratio > 28 AND dti_ratio <= 36",
+        "risk_level": "low",
+        "action": "approve",
+        "notes": "Total DTI within acceptable range. Standard approval pathway."
+      },
+      {
+        "condition": "dti_ratio > 36 AND dti_ratio <= 43",
+        "risk_level": "medium",
+        "action": "review",
+        "notes": "Elevated DTI. Requires compensating factors such as high credit score (>720), substantial reserves (6+ months), or stable employment history (5+ years)."
+      },
+      {
+        "condition": "dti_ratio > 43 AND dti_ratio <= 50",
+        "risk_level": "high",
+        "action": "escalate",
+        "notes": "High DTI. Requires exception approval from credit committee. Must document strong compensating factors."
+      },
+      {
+        "condition": "dti_ratio > 50",
+        "risk_level": "critical",
+        "action": "deny",
+        "notes": "DTI exceeds maximum threshold. Application should be declined."
+      }
+    ],
+    "calculation_method": "Total Monthly Debt Payments / Gross Monthly Income * 100",
+    "effective_date": "2025-01-01",
+    "last_updated": "2026-01-15",
+    "regulatory_reference": "Qualified Mortgage Rule (QM)"
+  },
+  {
+    "id": "policy-003",
+    "category": "credit_risk",
+    "subcategory": "loan_to_value",
+    "title": "Loan-to-Value Ratio Guidelines",
+    "description": "Defines LTV thresholds and corresponding requirements",
+    "rules": [
+      {
+        "condition": "ltv_ratio <= 80",
+        "risk_level": "low",
+        "action": "approve",
+        "notes": "Standard LTV. No PMI required. Favorable terms available."
+      },
+      {
+        "condition": "ltv_ratio > 80 AND ltv_ratio <= 90",
+        "risk_level": "medium",
+        "action": "approve_with_conditions",
+        "notes": "Elevated LTV. Private Mortgage Insurance (PMI) required. Minimum credit score of 680."
+      },
+      {
+        "condition": "ltv_ratio > 90 AND ltv_ratio <= 95",
+        "risk_level": "high",
+        "action": "review",
+        "notes": "High LTV. PMI required. Minimum credit score of 720. Maximum DTI of 41%. Requires senior underwriter approval."
+      },
+      {
+        "condition": "ltv_ratio > 95 AND ltv_ratio <= 97",
+        "risk_level": "high",
+        "action": "escalate",
+        "notes": "Very high LTV. Only available for first-time homebuyers. Credit score minimum 740. Requires credit committee approval."
+      },
+      {
+        "condition": "ltv_ratio > 97",
+        "risk_level": "critical",
+        "action": "deny",
+        "notes": "LTV exceeds maximum allowable threshold. Consider FHA or VA loan programs if eligible."
+      }
+    ],
+    "calculation_method": "Loan Amount / Property Value * 100",
+    "effective_date": "2025-01-01",
+    "last_updated": "2026-01-15",
+    "regulatory_reference": "Fannie Mae Selling Guide"
+  },
+  {
+    "id": "policy-004",
+    "category": "credit_risk",
+    "subcategory": "employment_stability",
+    "title": "Employment History Requirements",
+    "description": "Evaluates employment stability as a credit risk factor",
+    "rules": [
+      {
+        "condition": "years_employed >= 5 AND employment_status = 'full_time'",
+        "risk_level": "low",
+        "action": "approve",
+        "notes": "Strong employment stability. Positive factor for loan approval."
+      },
+      {
+        "condition": "years_employed >= 2 AND years_employed < 5 AND employment_status = 'full_time'",
+        "risk_level": "low",
+        "action": "approve",
+        "notes": "Adequate employment history. Standard verification required."
+      },
+      {
+        "condition": "years_employed >= 1 AND years_employed < 2 AND employment_status = 'full_time'",
+        "risk_level": "medium",
+        "action": "review",
+        "notes": "Limited employment history. Require previous employer verification. Consider industry stability."
+      },
+      {
+        "condition": "years_employed < 1 OR employment_status = 'part_time'",
+        "risk_level": "high",
+        "action": "escalate",
+        "notes": "Insufficient employment history or part-time status. Requires additional income documentation and credit committee review."
+      },
+      {
+        "condition": "employment_status = 'self_employed'",
+        "risk_level": "medium",
+        "action": "review",
+        "notes": "Self-employed applicants require 2 years of tax returns, profit/loss statements, and business verification."
+      },
+      {
+        "condition": "employment_status = 'unemployed'",
+        "risk_level": "critical",
+        "action": "deny",
+        "notes": "No current employment. Application should be declined unless substantial passive income or assets exist."
+      }
+    ],
+    "effective_date": "2025-01-01",
+    "last_updated": "2026-01-15",
+    "regulatory_reference": "Fannie Mae Selling Guide Section B3-3"
+  },
+  {
+    "id": "policy-005",
+    "category": "credit_risk",
+    "subcategory": "reserves",
+    "title": "Cash Reserve Requirements",
+    "description": "Minimum reserve requirements based on loan type and risk factors",
+    "rules": [
+      {
+        "condition": "reserves_months >= 6",
+        "risk_level": "low",
+        "action": "approve",
+        "notes": "Strong reserves. Positive compensating factor. Can offset other risk factors."
+      },
+      {
+        "condition": "reserves_months >= 3 AND reserves_months < 6",
+        "risk_level": "low",
+        "action": "approve",
+        "notes": "Adequate reserves for standard conventional loans."
+      },
+      {
+        "condition": "reserves_months >= 2 AND reserves_months < 3",
+        "risk_level": "medium",
+        "action": "review",
+        "notes": "Minimum reserves. Acceptable for primary residence with strong credit profile."
+      },
+      {
+        "condition": "reserves_months < 2",
+        "risk_level": "high",
+        "action": "escalate",
+        "notes": "Insufficient reserves. Requires compensating factors such as gift funds documentation or salary increase letter."
+      }
+    ],
+    "calculation_method": "Liquid Assets / (Monthly Mortgage Payment + Monthly Debt Payments)",
+    "effective_date": "2025-01-01",
+    "last_updated": "2026-01-15",
+    "regulatory_reference": "Fannie Mae Selling Guide Section B3-4"
+  }
+]

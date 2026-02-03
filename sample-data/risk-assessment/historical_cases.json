@@ -1,0 +1,194 @@
+[
+  {
+    "id": "case-001",
+    "case_type": "approved",
+    "date": "2025-11-15",
+    "summary": "Strong applicant with excellent credit profile",
+    "applicant_profile": {
+      "annual_income": 185000,
+      "employment_status": "full_time",
+      "years_employed": 4,
+      "employer_type": "technology"
+    },
+    "loan_details": {
+      "loan_amount": 450000,
+      "property_value": 575000,
+      "loan_purpose": "home_purchase",
+      "loan_term_years": 30
+    },
+    "risk_metrics": {
+      "credit_score": 745,
+      "dti_ratio": 22.5,
+      "ltv_ratio": 78.3,
+      "reserves_months": 8.2
+    },
+    "calculated_risk_score": 87,
+    "risk_level": "low",
+    "decision": "approved",
+    "decision_rationale": "Applicant demonstrates strong credit profile with excellent income stability, healthy reserves, and favorable LTV ratio. Credit score in good range. All standard underwriting criteria met.",
+    "conditions": [],
+    "underwriter_notes": "Standard approval. No compensating factors needed. Recommend competitive rate."
+  },
+  {
+    "id": "case-002",
+    "case_type": "approved_with_conditions",
+    "date": "2025-10-22",
+    "summary": "Good applicant with elevated DTI requiring additional documentation",
+    "applicant_profile": {
+      "annual_income": 120000,
+      "employment_status": "full_time",
+      "years_employed": 3,
+      "employer_type": "healthcare"
+    },
+    "loan_details": {
+      "loan_amount": 380000,
+      "property_value": 425000,
+      "loan_purpose": "home_purchase",
+      "loan_term_years": 30
+    },
+    "risk_metrics": {
+      "credit_score": 712,
+      "dti_ratio": 41.2,
+      "ltv_ratio": 89.4,
+      "reserves_months": 4.5
+    },
+    "calculated_risk_score": 68,
+    "risk_level": "medium",
+    "decision": "approved_with_conditions",
+    "decision_rationale": "Applicant has good credit score and stable employment. DTI slightly elevated at 41.2% but within QM guidelines. High LTV requires PMI. Reserves adequate but not strong.",
+    "conditions": [
+      "Private Mortgage Insurance (PMI) required",
+      "Verification of 2 additional months of bank statements",
+      "Employment verification within 10 days of closing"
+    ],
+    "underwriter_notes": "Approved with conditions. Compensating factors: stable healthcare industry employment, no derogatory credit history. Rate adjustment of +0.25% recommended."
+  },
+  {
+    "id": "case-003",
+    "case_type": "escalated_approved",
+    "date": "2025-09-08",
+    "summary": "Self-employed applicant with strong assets but complex income",
+    "applicant_profile": {
+      "annual_income": 225000,
+      "employment_status": "self_employed",
+      "years_employed": 6,
+      "employer_type": "consulting"
+    },
+    "loan_details": {
+      "loan_amount": 520000,
+      "property_value": 680000,
+      "loan_purpose": "home_purchase",
+      "loan_term_years": 30
+    },
+    "risk_metrics": {
+      "credit_score": 768,
+      "dti_ratio": 38.5,
+      "ltv_ratio": 76.5,
+      "reserves_months": 14.2
+    },
+    "calculated_risk_score": 72,
+    "risk_level": "medium",
+    "decision": "approved",
+    "decision_rationale": "Self-employed status requires additional scrutiny. However, applicant demonstrates excellent credit score, strong reserves (14+ months), and favorable LTV. Six years of consistent self-employment income documented.",
+    "conditions": [
+      "Two years of complete tax returns required",
+      "CPA letter confirming business viability",
+      "Year-to-date profit and loss statement"
+    ],
+    "underwriter_notes": "Escalated to senior underwriter due to self-employment. Approved based on strong compensating factors. Substantial reserves offset self-employment risk."
+  },
+  {
+    "id": "case-004",
+    "case_type": "denied",
+    "date": "2025-08-30",
+    "summary": "Applicant with poor credit and insufficient reserves",
+    "applicant_profile": {
+      "annual_income": 85000,
+      "employment_status": "full_time",
+      "years_employed": 1,
+      "employer_type": "retail"
+    },
+    "loan_details": {
+      "loan_amount": 300000,
+      "property_value": 310000,
+      "loan_purpose": "home_purchase",
+      "loan_term_years": 30
+    },
+    "risk_metrics": {
+      "credit_score": 562,
+      "dti_ratio": 48.5,
+      "ltv_ratio": 96.8,
+      "reserves_months": 1.2
+    },
+    "calculated_risk_score": 32,
+    "risk_level": "critical",
+    "decision": "denied",
+    "decision_rationale": "Multiple critical risk factors present: credit score below minimum threshold (562 < 580), DTI exceeds 43% limit (48.5%), LTV exceeds conventional maximum (96.8%), insufficient reserves (1.2 months). No compensating factors available.",
+    "conditions": [],
+    "underwriter_notes": "Application denied. Recommended applicant work on improving credit score, reducing debt, and building savings. May be eligible for FHA loan program in future."
+  },
+  {
+    "id": "case-005",
+    "case_type": "approved",
+    "date": "2025-12-01",
+    "summary": "First-time homebuyer with strong credit and family gift for down payment",
+    "applicant_profile": {
+      "annual_income": 95000,
+      "employment_status": "full_time",
+      "years_employed": 2,
+      "employer_type": "finance"
+    },
+    "loan_details": {
+      "loan_amount": 285000,
+      "property_value": 320000,
+      "loan_purpose": "home_purchase",
+      "loan_term_years": 30
+    },
+    "risk_metrics": {
+      "credit_score": 738,
+      "dti_ratio": 32.4,
+      "ltv_ratio": 89.1,
+      "reserves_months": 3.8
+    },
+    "calculated_risk_score": 75,
+    "risk_level": "low_medium",
+    "decision": "approved",
+    "decision_rationale": "First-time homebuyer with strong credit profile. LTV slightly elevated but within PMI guidelines. Gift funds properly documented. Stable employment in finance sector.",
+    "conditions": [
+      "Gift letter from parents required",
+      "PMI required until 80% LTV achieved",
+      "First-time homebuyer certification"
+    ],
+    "underwriter_notes": "Approved with standard conditions. Strong candidate for first-time buyer program. Gift funds sourced and documented properly."
+  },
+  {
+    "id": "case-006",
+    "case_type": "denied",
+    "date": "2025-07-18",
+    "summary": "Recent bankruptcy disqualifies applicant",
+    "applicant_profile": {
+      "annual_income": 110000,
+      "employment_status": "full_time",
+      "years_employed": 5,
+      "employer_type": "manufacturing"
+    },
+    "loan_details": {
+      "loan_amount": 250000,
+      "property_value": 350000,
+      "loan_purpose": "home_purchase",
+      "loan_term_years": 30
+    },
+    "risk_metrics": {
+      "credit_score": 642,
+      "dti_ratio": 28.5,
+      "ltv_ratio": 71.4,
+      "reserves_months": 6.5
+    },
+    "calculated_risk_score": 58,
+    "risk_level": "medium",
+    "decision": "denied",
+    "decision_rationale": "Despite favorable LTV and reserves, applicant has Chapter 7 bankruptcy discharged only 2 years ago. Conventional loans require minimum 4-year waiting period post-bankruptcy. Credit score still recovering.",
+    "conditions": [],
+    "underwriter_notes": "Denied due to bankruptcy waiting period requirement. Applicant may reapply after 4-year waiting period from discharge date. Consider FHA program which has 2-year waiting period."
+  }
+]
