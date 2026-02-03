@@ -1,0 +1,93 @@
+{
+  "application_id": "LN-2026-00142",
+  "assessment_date": "2026-01-15",
+  "risk_summary": {
+    "overall_risk_level": "low",
+    "risk_score": 87,
+    "recommendation": "approve"
+  },
+  "metric_analysis": {
+    "credit_score": {
+      "value": 745,
+      "risk_level": "low",
+      "policy_reference": "policy-001: Credit Score Risk Classification",
+      "notes": "Credit score of 745 falls in 'Good' range (700-749). Standard processing with routine verification."
+    },
+    "dti_ratio": {
+      "value": 22.5,
+      "risk_level": "low",
+      "policy_reference": "policy-002: Debt-to-Income Ratio Requirements",
+      "notes": "DTI of 22.5% is well below the 28% optimal threshold. Strong capacity for mortgage payments."
+    },
+    "ltv_ratio": {
+      "value": 78.26,
+      "risk_level": "low",
+      "policy_reference": "policy-003: Loan-to-Value Ratio Guidelines",
+      "notes": "LTV of 78.26% is below 80% threshold. No PMI required. Favorable terms available."
+    },
+    "employment_stability": {
+      "status": "full_time",
+      "years": 4,
+      "risk_level": "low",
+      "policy_reference": "policy-004: Employment History Requirements",
+      "notes": "4 years full-time employment at current employer exceeds 2-year minimum. Technology sector employment is considered stable."
+    },
+    "reserves": {
+      "months": 8.2,
+      "risk_level": "low",
+      "policy_reference": "policy-005: Cash Reserve Requirements",
+      "notes": "8.2 months of reserves exceeds the 6-month threshold for 'Strong reserves'. This is a positive compensating factor."
+    }
+  },
+  "compensating_factors": [
+    {
+      "factor": "Strong cash reserves",
+      "impact": "8.2 months of reserves demonstrates financial stability and ability to weather income disruption",
+      "points": 3
+    },
+    {
+      "factor": "Low DTI ratio",
+      "impact": "DTI of 22.5% is significantly below 36% threshold, indicating strong debt management",
+      "points": 2
+    },
+    {
+      "factor": "Primary residence",
+      "impact": "Owner-occupied properties have lower default rates than investment properties",
+      "points": 2
+    },
+    {
+      "factor": "Stable employment history",
+      "impact": "4 years with current employer in technology sector indicates job stability",
+      "points": 2
+    }
+  ],
+  "risk_flags": [],
+  "similar_cases": [
+    {
+      "case_id": "case-001",
+      "similarity": "High - Similar income ($185K), loan amount ($450K), LTV (78%), employment tenure (4 years)",
+      "outcome": "Approved",
+      "relevance": "Nearly identical profile with same recommendation. Supports approval decision."
+    },
+    {
+      "case_id": "case-005",
+      "similarity": "Medium - First-time buyer with strong credit, similar LTV range",
+      "outcome": "Approved with conditions (gift funds)",
+      "relevance": "Demonstrates approval pathway for similar risk profile. Current applicant has stronger reserves."
+    }
+  ],
+  "regulatory_compliance": {
+    "qm_eligible": true,
+    "fannie_mae_eligible": true,
+    "compliance_notes": "Application meets all QM requirements: DTI below 43%, verified income, 30-year fixed term, no prohibited features. Eligible for Fannie Mae purchase based on credit score (745 > 620 minimum), LTV (78.26% < 97% maximum), and standard documentation."
+  },
+  "conditions": [],
+  "decision_rationale": "Application demonstrates a strong credit profile across all evaluation criteria. Credit score of 745 indicates good credit history. DTI of 22.5% shows excellent debt management with significant capacity for the proposed mortgage payment. LTV of 78.26% provides adequate equity cushion and eliminates PMI requirement. Employment stability of 4 years in technology sector is favorable. Liquid assets of $162,500 provide 8.2 months of reserves, exceeding the 6-month 'strong reserves' threshold. All declarations are positive with no foreclosures, bankruptcies, or lawsuits. Property is intended as primary residence, which correlates with lower default rates. This application aligns closely with Case-001 which was approved with similar metrics. No risk flags identified.",
+  "next_steps": [
+    "Proceed with standard verification of employment and income",
+    "Order property appraisal",
+    "Verify asset accounts with bank statements",
+    "Complete title search and insurance",
+    "Prepare Loan Estimate disclosure within 3 business days"
+  ]
+}

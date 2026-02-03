@@ -1,0 +1,230 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Loan Application Extracted Data",
+  "description": "Schema for data extracted by the Document Intake Agent from loan applications. This data is passed to the Risk Assessment Agent.",
+  "type": "object",
+  "required": [
+    "application_id",
+    "applicant",
+    "employment",
+    "loan_details",
+    "property",
+    "financials"
+  ],
+  "properties": {
+    "application_id": {
+      "type": "string",
+      "description": "Unique identifier for the loan application"
+    },
+    "extraction_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the data was extracted"
+    },
+    "applicant": {
+      "type": "object",
+      "required": ["full_name"],
+      "properties": {
+        "full_name": {
+          "type": "string",
+          "description": "Applicant's full legal name"
+        },
+        "date_of_birth": {
+          "type": "string",
+          "format": "date",
+          "description": "Applicant's date of birth"
+        },
+        "ssn_last_four": {
+          "type": "string",
+          "description": "Last 4 digits of SSN for verification"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": {"type": "string"},
+            "city": {"type": "string"},
+            "state": {"type": "string"},
+            "zip_code": {"type": "string"}
+          }
+        },
+        "is_us_citizen": {
+          "type": "boolean"
+        }
+      }
+    },
+    "employment": {
+      "type": "object",
+      "required": ["status", "annual_income"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["full_time", "part_time", "self_employed", "retired", "unemployed"],
+          "description": "Current employment status"
+        },
+        "employer_name": {
+          "type": "string"
+        },
+        "job_title": {
+          "type": "string"
+        },
+        "years_at_employer": {
+          "type": "number",
+          "description": "Years at current employer"
+        },
+        "annual_income": {
+          "type": "number",
+          "description": "Annual gross income in dollars"
+        },
+        "employer_address": {
+          "type": "string"
+        }
+      }
+    },
+    "loan_details": {
+      "type": "object",
+      "required": ["amount_requested", "purpose", "term_years"],
+      "properties": {
+        "amount_requested": {
+          "type": "number",
+          "description": "Loan amount requested in dollars"
+        },
+        "purpose": {
+          "type": "string",
+          "enum": ["home_purchase", "refinance", "home_equity", "construction"],
+          "description": "Purpose of the loan"
+        },
+        "term_years": {
+          "type": "integer",
+          "description": "Requested loan term in years"
+        }
+      }
+    },
+    "property": {
+      "type": "object",
+      "required": ["type", "estimated_value", "occupancy"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["single_family", "condo", "townhouse", "multi_family", "manufactured"],
+          "description": "Type of property"
+        },
+        "address": {
+          "type": "object",
+          "properties": {
+            "street": {"type": "string"},
+            "city": {"type": "string"},
+            "state": {"type": "string"},
+            "zip_code": {"type": "string"}
+          }
+        },
+        "estimated_value": {
+          "type": "number",
+          "description": "Estimated property value in dollars"
+        },
+        "occupancy": {
+          "type": "string",
+          "enum": ["primary_residence", "secondary_residence", "investment"],
+          "description": "Intended use of property"
+        }
+      }
+    },
+    "financials": {
+      "type": "object",
+      "required": ["total_assets", "monthly_debt_payments"],
+      "properties": {
+        "total_assets": {
+          "type": "number",
+          "description": "Total assets in dollars"
+        },
+        "liquid_assets": {
+          "type": "number",
+          "description": "Liquid assets (cash, savings, investments) in dollars"
+        },
+        "monthly_debt_payments": {
+          "type": "number",
+          "description": "Total monthly debt payments in dollars"
+        },
+        "assets_breakdown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {"type": "string"},
+              "description": {"type": "string"},
+              "value": {"type": "number"}
+            }
+          }
+        },
+        "liabilities_breakdown": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {"type": "string"},
+              "description": {"type": "string"},
+              "monthly_payment": {"type": "number"},
+              "balance": {"type": "number"}
+            }
+          }
+        }
+      }
+    },
+    "declarations": {
+      "type": "object",
+      "description": "Applicant declarations",
+      "properties": {
+        "no_foreclosure_7_years": {
+          "type": "boolean"
+        },
+        "no_bankruptcy_7_years": {
+          "type": "boolean"
+        },
+        "no_lawsuit": {
+          "type": "boolean"
+        },
+        "primary_residence_intent": {
+          "type": "boolean"
+        }
+      }
+    },
+    "credit_info": {
+      "type": "object",
+      "description": "Credit information (may be added from credit bureau)",
+      "properties": {
+        "credit_score": {
+          "type": "integer",
+          "description": "FICO credit score"
+        },
+        "credit_score_source": {
+          "type": "string",
+          "description": "Credit bureau source"
+        }
+      }
+    },
+    "calculated_metrics": {
+      "type": "object",
+      "description": "Metrics calculated from extracted data",
+      "properties": {
+        "dti_ratio": {
+          "type": "number",
+          "description": "Debt-to-income ratio as percentage"
+        },
+        "ltv_ratio": {
+          "type": "number",
+          "description": "Loan-to-value ratio as percentage"
+        },
+        "reserves_months": {
+          "type": "number",
+          "description": "Months of payment reserves"
+        }
+      }
+    }
+  }
+}

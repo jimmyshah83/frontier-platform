@@ -1,0 +1,74 @@
+{
+  "application_id": "LN-2026-00142",
+  "extraction_timestamp": "2026-01-15T14:30:00Z",
+  "applicant": {
+    "full_name": "Sarah Michelle Johnson",
+    "date_of_birth": "1985-03-15",
+    "ssn_last_four": "4521",
+    "email": "sarah.johnson@email.com",
+    "phone": "(555) 867-5309",
+    "address": {
+      "street": "1234 Oak Valley Drive, Apt 2B",
+      "city": "San Francisco",
+      "state": "California",
+      "zip_code": "94102"
+    },
+    "is_us_citizen": true
+  },
+  "employment": {
+    "status": "full_time",
+    "employer_name": "TechVision Solutions Inc.",
+    "job_title": "Senior Software Engineer",
+    "years_at_employer": 4,
+    "annual_income": 185000,
+    "employer_address": "500 Market Street, Suite 400, San Francisco, CA 94105"
+  },
+  "loan_details": {
+    "amount_requested": 450000,
+    "purpose": "home_purchase",
+    "term_years": 30
+  },
+  "property": {
+    "type": "single_family",
+    "address": {
+      "street": "789 Hillside Avenue",
+      "city": "Oakland",
+      "state": "California",
+      "zip_code": "94610"
+    },
+    "estimated_value": 575000,
+    "occupancy": "primary_residence"
+  },
+  "financials": {
+    "total_assets": 346500,
+    "liquid_assets": 162500,
+    "monthly_debt_payments": 775,
+    "assets_breakdown": [
+      {"type": "checking", "description": "First National Bank", "value": 32500},
+      {"type": "savings", "description": "First National Bank", "value": 85000},
+      {"type": "retirement", "description": "401(k) Retirement Account", "value": 156000},
+      {"type": "investment", "description": "Investment Portfolio", "value": 45000},
+      {"type": "vehicle", "description": "2022 Honda Accord", "value": 28000}
+    ],
+    "liabilities_breakdown": [
+      {"type": "auto_loan", "description": "Auto Loan", "monthly_payment": 425, "balance": 15000},
+      {"type": "student_loan", "description": "Student Loan", "monthly_payment": 350, "balance": 22000},
+      {"type": "credit_card", "description": "Visa Credit Card", "monthly_payment": 0, "balance": 0}
+    ]
+  },
+  "declarations": {
+    "no_foreclosure_7_years": true,
+    "no_bankruptcy_7_years": true,
+    "no_lawsuit": true,
+    "primary_residence_intent": true
+  },
+  "credit_info": {
+    "credit_score": 745,
+    "credit_score_source": "Experian"
+  },
+  "calculated_metrics": {
+    "dti_ratio": 22.5,
+    "ltv_ratio": 78.26,
+    "reserves_months": 8.2
+  }
+}
