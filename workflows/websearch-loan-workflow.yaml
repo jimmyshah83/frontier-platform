@@ -1,0 +1,86 @@
+kind: workflow
+trigger:
+  kind: OnConversationStart
+  id: trigger_wf
+  actions:
+    # Step 1: Web Search Agent - Gather current market data FIRST
+    - kind: InvokeAzureAgent
+      id: action-web-search
+      agent:
+        name: web-search-agent
+      conversationId: =System.ConversationId
+      waitForCompletion: true
+      input:
+        messages:
+          role: user
+          content: |
+            Search for the following current information to support loan risk assessment:
+            1. Current 30-year fixed mortgage rates
+            2. Current US housing market trends in California (Oakland area)
+            3. Recent CFPB mortgage lending regulatory updates
+            4. Current economic indicators (unemployment rate, housing price index)
+      output:
+        responseObject: Local.WebSearchResults
+        autoSend: false
+
+    # Step 2: Loan Processing Agent - Extract data from document
+    - kind: InvokeAzureAgent
+      id: action-loan-processing
+      agent:
+        name: loan-processing-json
+      conversationId: =System.ConversationId
+      waitForCompletion: true
+      input:
+        messages:
+          role: user
+          content: |
+            Process the following loan application document and extract ALL structured data.
+            
+            REQUIRED FIELDS TO EXTRACT:
+            - Applicant information (name, address, contact)
+            - Employment details (employer, income, years employed)
+            - Loan details (amount, purpose, term)
+            - Property information (type, address, value)
+            - Credit information (credit score, source)
+            - Assets and liabilities
+            - Monthly debt payments
+            - Declarations
+            
+            CALCULATED METRICS TO COMPUTE:
+            - DTI Ratio = (Monthly Debt Payments / (Annual Income / 12)) * 100
+            - LTV Ratio = (Loan Amount / Property Value) * 100  
+            - Reserves Months = Liquid Assets / Monthly Debt Payments
+
+            Document to process:
+            =System.LastMessage
+      output:
+        responseObject: Local.ExtractedLoanData
+        autoSend: false
+    - kind: InvokeAzureAgent
+      id: action-risk-assessment
+      agent:
+        name: risk-assessment-agent-aisearch-tool
+      conversationId: =System.ConversationId
+      waitForCompletion: true
+      input:
+        messages:
+          role: user
+          content: |
+            Perform a comprehensive risk assessment using the following data:
+
+            ## Extracted Loan Application Data
+            =String(Local.ExtractedLoanData)
+
+            ## Current Market Context (from Web Search)
+            =String(Local.WebSearchResults)
+
+            Please evaluate this application against our credit policies, find similar historical cases, 
+            check regulatory compliance, and provide a risk recommendation.
+      output:
+        responseObject: Local.RiskAssessment
+        autoSend: true
+    - kind: EndConversation
+      id: action-end-conversation
+id: web-search-risk-assessment-workflow
+name: web-search-risk-assessment-workflow
+description: Multi-agent workflow that performs web research, processes loan documents via Content Understanding, and generates risk assessments

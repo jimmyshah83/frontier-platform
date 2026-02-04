@@ -61,6 +61,12 @@ N/A - Have been at current employer for 4 years
 
 **Total Monthly Debt Payments:** $775
 
+## Credit Information
+
+**Credit Score:** 745  
+**Credit Score Source:** Experian  
+**Credit Report Date:** January 10, 2026  
+
 ## Declarations
 
 I/We declare that:
