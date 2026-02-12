@@ -580,6 +580,19 @@ wheels = [
 ]
 
 [[package]]
+name = "azure-cosmos"
+version = "4.15.0b2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "azure-core" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d2/d2/687e9822df0f9ece13c20f438d68b71812a940b8c36d8cae5d569e18c6a0/azure_cosmos-4.15.0b2.tar.gz", hash = "sha256:ebb03832ae8b62bbcffe7829ddada40c2e911135ca323123d8c42e490f910816", size = 2087731, upload-time = "2025-12-17T09:23:19.904Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cd/2f/1b55c00bc4e45a96542fc214f9a5c52d247f2425e5669e5a8a2554bcdb51/azure_cosmos-4.15.0b2-py3-none-any.whl", hash = "sha256:80efb81e4f96ceb72e1e5b526788b3524f23cb20a6d46762234448dc8d09e500", size = 420404, upload-time = "2025-12-17T09:23:21.883Z" },
+]
+
+[[package]]
 name = "azure-functions"
 version = "1.25.0b3.dev2"
 source = { registry = "https://pypi.org/simple" }
@@ -1494,6 +1507,7 @@ name = "loan-processor"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "azure-cosmos" },
     { name = "azure-identity" },
     { name = "azure-search-documents" },
     { name = "azure-storage-blob" },
@@ -1515,6 +1529,7 @@ agent = [
 requires-dist = [
     { name = "agent-framework", marker = "extra == 'agent'" },
     { name = "agent-framework-azure-ai", marker = "extra == 'agent'" },
+    { name = "azure-cosmos", specifier = ">=4.0.0" },
     { name = "azure-identity", specifier = ">=1.15.0" },
     { name = "azure-search-documents", specifier = ">=11.4.0" },
     { name = "azure-storage-blob", specifier = ">=12.19.0" },

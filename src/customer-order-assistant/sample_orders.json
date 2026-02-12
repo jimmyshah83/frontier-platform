@@ -1,0 +1,146 @@
+[
+  {
+    "id": "order-1001",
+    "customerId": "contoso-001",
+    "customerName": "Contoso Ltd",
+    "contactEmail": "orders@contoso.com",
+    "items": [
+      { "sku": "WIDGET-A", "name": "Widget A", "qty": 50, "unitPrice": 12.99 },
+      { "sku": "GADGET-B", "name": "Gadget B", "qty": 20, "unitPrice": 29.99 }
+    ],
+    "status": "Shipped",
+    "orderDate": "2026-02-01T10:00:00Z",
+    "estimatedDelivery": "2026-02-14T00:00:00Z",
+    "totalAmount": 1249.30
+  },
+  {
+    "id": "order-1002",
+    "customerId": "contoso-001",
+    "customerName": "Contoso Ltd",
+    "contactEmail": "orders@contoso.com",
+    "items": [
+      { "sku": "SENSOR-C", "name": "Sensor C", "qty": 100, "unitPrice": 8.50 }
+    ],
+    "status": "Processing",
+    "orderDate": "2026-02-10T14:30:00Z",
+    "estimatedDelivery": "2026-02-20T00:00:00Z",
+    "totalAmount": 850.00
+  },
+  {
+    "id": "order-2001",
+    "customerId": "northwind-002",
+    "customerName": "Northwind Traders",
+    "contactEmail": "purchasing@northwind.com",
+    "items": [
+      { "sku": "WIDGET-A", "name": "Widget A", "qty": 200, "unitPrice": 12.99 },
+      { "sku": "MODULE-D", "name": "Module D", "qty": 10, "unitPrice": 149.99 }
+    ],
+    "status": "Delivered",
+    "orderDate": "2026-01-15T09:00:00Z",
+    "estimatedDelivery": "2026-01-28T00:00:00Z",
+    "deliveredDate": "2026-01-27T16:45:00Z",
+    "totalAmount": 4097.90
+  },
+  {
+    "id": "order-2002",
+    "customerId": "northwind-002",
+    "customerName": "Northwind Traders",
+    "contactEmail": "purchasing@northwind.com",
+    "items": [
+      { "sku": "GADGET-B", "name": "Gadget B", "qty": 75, "unitPrice": 29.99 },
+      { "sku": "SENSOR-C", "name": "Sensor C", "qty": 50, "unitPrice": 8.50 }
+    ],
+    "status": "Shipped",
+    "orderDate": "2026-02-05T11:15:00Z",
+    "estimatedDelivery": "2026-02-15T00:00:00Z",
+    "totalAmount": 2674.25
+  },
+  {
+    "id": "order-3001",
+    "customerId": "fabrikam-003",
+    "customerName": "Fabrikam Inc",
+    "contactEmail": "supply@fabrikam.com",
+    "items": [
+      { "sku": "MODULE-D", "name": "Module D", "qty": 5, "unitPrice": 149.99 },
+      { "sku": "WIDGET-A", "name": "Widget A", "qty": 300, "unitPrice": 12.99 }
+    ],
+    "status": "Processing",
+    "orderDate": "2026-02-11T08:00:00Z",
+    "estimatedDelivery": "2026-02-25T00:00:00Z",
+    "totalAmount": 4646.95
+  },
+  {
+    "id": "order-3002",
+    "customerId": "fabrikam-003",
+    "customerName": "Fabrikam Inc",
+    "contactEmail": "supply@fabrikam.com",
+    "items": [
+      { "sku": "GADGET-B", "name": "Gadget B", "qty": 40, "unitPrice": 29.99 }
+    ],
+    "status": "Cancelled",
+    "orderDate": "2026-01-20T13:00:00Z",
+    "cancelledDate": "2026-01-22T09:30:00Z",
+    "cancelReason": "Customer requested cancellation - duplicate order",
+    "totalAmount": 1199.60
+  },
+  {
+    "id": "order-4001",
+    "customerId": "adventureworks-004",
+    "customerName": "Adventure Works",
+    "contactEmail": "ops@adventureworks.com",
+    "items": [
+      { "sku": "SENSOR-C", "name": "Sensor C", "qty": 500, "unitPrice": 8.50 },
+      { "sku": "MODULE-D", "name": "Module D", "qty": 25, "unitPrice": 149.99 },
+      { "sku": "WIDGET-A", "name": "Widget A", "qty": 100, "unitPrice": 12.99 }
+    ],
+    "status": "Shipped",
+    "orderDate": "2026-02-03T07:45:00Z",
+    "estimatedDelivery": "2026-02-16T00:00:00Z",
+    "totalAmount": 9298.75
+  },
+  {
+    "id": "order-5001",
+    "customerId": "tailwind-005",
+    "customerName": "Tailwind Toys",
+    "contactEmail": "orders@tailwindtoys.com",
+    "items": [
+      { "sku": "GADGET-B", "name": "Gadget B", "qty": 150, "unitPrice": 29.99 },
+      { "sku": "WIDGET-A", "name": "Widget A", "qty": 80, "unitPrice": 12.99 }
+    ],
+    "status": "Delivered",
+    "orderDate": "2026-01-10T12:00:00Z",
+    "estimatedDelivery": "2026-01-24T00:00:00Z",
+    "deliveredDate": "2026-01-23T14:20:00Z",
+    "totalAmount": 5537.70
+  },
+  {
+    "id": "order-5002",
+    "customerId": "tailwind-005",
+    "customerName": "Tailwind Toys",
+    "contactEmail": "orders@tailwindtoys.com",
+    "items": [
+      { "sku": "MODULE-D", "name": "Module D", "qty": 15, "unitPrice": 149.99 },
+      { "sku": "SENSOR-C", "name": "Sensor C", "qty": 200, "unitPrice": 8.50 }
+    ],
+    "status": "Processing",
+    "orderDate": "2026-02-12T09:00:00Z",
+    "estimatedDelivery": "2026-02-26T00:00:00Z",
+    "totalAmount": 3949.85
+  },
+  {
+    "id": "order-6001",
+    "customerId": "wideworldimporters-006",
+    "customerName": "Wide World Importers",
+    "contactEmail": "procurement@wideworldimporters.com",
+    "items": [
+      { "sku": "WIDGET-A", "name": "Widget A", "qty": 1000, "unitPrice": 12.99 },
+      { "sku": "GADGET-B", "name": "Gadget B", "qty": 500, "unitPrice": 29.99 },
+      { "sku": "SENSOR-C", "name": "Sensor C", "qty": 300, "unitPrice": 8.50 },
+      { "sku": "MODULE-D", "name": "Module D", "qty": 50, "unitPrice": 149.99 }
+    ],
+    "status": "Shipped",
+    "orderDate": "2026-02-07T15:30:00Z",
+    "estimatedDelivery": "2026-02-21T00:00:00Z",
+    "totalAmount": 37039.50
+  }
+]
