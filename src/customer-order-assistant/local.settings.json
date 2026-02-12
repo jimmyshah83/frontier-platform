@@ -1,0 +1,10 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "python",
+    "COSMOS_ENDPOINT": "",
+    "COSMOS_DATABASE": "cust-order-db",
+    "COSMOS_CONTAINER": "orders"
+  }
+}
