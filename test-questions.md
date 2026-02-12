@@ -1,6 +1,6 @@
 ### Workflow: Risk Assessment Agent Testing: 
 
-Q: Extract loan data from: https://raw.githubusercontent.com/jimmyshah83/frontier-platform/main/sample-data/sample-loan-application.pdf
+[Q: Extract loan data from: https://raw.githubusercontent.com/jimmyshah83/frontier-platform/main/sample-data/sample-loan-application.pdf](https://github.com/jimmyshah83/frontier-platform/tree/main)
 
 ### Here are example questions to test your Risk Assessment Agent against the indexed data:
 
