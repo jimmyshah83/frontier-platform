@@ -21,17 +21,12 @@ dependencies = [
     "uvicorn>=0.30.0",
     "starlette>=0.38.0",
     "azure-cosmos>=4.0.0",
-]
-
-[project.optional-dependencies]
-# Pre-release agent framework packages - install with: uv pip install -e ".[agent]" --prerelease=allow
-agent = [
-    "agent-framework",
-    "agent-framework-azure-ai",
+    "agent-framework>=1.0.0rc1",
+    # FastAPI server for the MAF risk-assessment workflow + React UI (SSE).
+    "fastapi>=0.115.0",
+    "sse-starlette>=2.1.0",
+    "azure-monitor-opentelemetry>=1.6.0",
 ]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/loan_processor"]
-
-[tool.uv]
-prerelease = "allow"
