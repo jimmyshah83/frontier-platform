@@ -113,7 +113,7 @@ async def stream_workflow(payload: RiskWorkflowInput):
         async for event in stream_risk_workflow(payload):
             yield {
                 "event": event.stage,
-                "data": json.dumps(event.to_dict()),
+                "data": event.model_dump_json(),
             }
 
     return EventSourceResponse(event_source())
