@@ -19,6 +19,11 @@ import logging
 import os
 from typing import AsyncIterator
 
+from dotenv import load_dotenv
+
+# Load .env before importing modules that read environment at import time.
+load_dotenv()
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sse_starlette.sse import EventSourceResponse
