@@ -230,17 +230,36 @@ async def run_risk_workflow(payload: RiskWorkflowInput) -> RiskWorkflowResult:
 
 
 async def stream_risk_workflow(payload: RiskWorkflowInput):
-    """Yield stage-level StreamEvents for the React UI (SSE-friendly)."""
+    """Yield stage-level StreamEvents for the React UI (SSE-friendly).
+
+    Uses ``workflow.run(prompt, stream=True)`` — the same pattern as the
+    ``azure_ai_agents_streaming.py`` sample — which surfaces every agent's
+    streaming updates with ``author_name`` set, so the UI can attribute
+    each chunk to the correct stage (intake / websearch / risk).
+    """
     yield StreamEvent(stage="workflow", status="started")
 
     try:
+        from agent_framework import AgentRunUpdateEvent  # type: ignore
+    except ImportError:  # older naming
+        AgentRunUpdateEvent = None  # type: ignore
+
+    try:
         workflow = _build_workflow()
-        agent = workflow.as_agent()
+    except Exception as exc:
+        logger.exception("Failed to build workflow")
+        yield StreamEvent(
+            stage="workflow", status="error", payload={"message": str(exc)}
+        )
+        return
 
-        last_author: str | None = None
-        buffer: dict[str, list[str]] = {}
+    last_stage: str | None = None
+    buffer: dict[str, list[str]] = {"intake": [], "websearch": [], "risk": []}
 
-        async for update in agent.run_stream(payload.render()):
+    try:
+        events = workflow.run(payload.render(), stream=True)
+        async for event in events:
+            update = getattr(event, "data", event)
             author = (
                 getattr(update, "author_name", None)
                 or getattr(update, "role", None)
@@ -248,40 +267,45 @@ async def stream_risk_workflow(payload: RiskWorkflowInput):
             )
             text = getattr(update, "text", "") or ""
             stage = _stage_for(author)
+            if stage is None:
+                continue
 
-            if stage and stage != last_author:
-                if last_author and last_author in buffer:
+            if stage != last_stage:
+                if last_stage and buffer[last_stage]:
                     yield StreamEvent(
-                        stage=last_author,
+                        stage=last_stage,
                         status="completed",
-                        payload={"text": "".join(buffer[last_author])},
+                        payload={"text": "".join(buffer[last_stage])},
                     )
                 yield StreamEvent(stage=stage, status="started")
-                last_author = stage
-                buffer[stage] = []
+                last_stage = stage
 
-            if stage and text:
+            if text:
                 buffer[stage].append(text)
+                # Incremental delta so the UI fills in live.
+                yield StreamEvent(
+                    stage=stage, status="running", payload={"text": text}
+                )
 
-        if last_author and last_author in buffer:
+        if last_stage and buffer[last_stage]:
             yield StreamEvent(
-                stage=last_author,
+                stage=last_stage,
                 status="completed",
-                payload={"text": "".join(buffer[last_author])},
+                payload={"text": "".join(buffer[last_stage])},
             )
 
         yield StreamEvent(
             stage="final",
             status="completed",
             payload={
-                "extracted_loan_data": "".join(buffer.get("intake", [])),
-                "web_search_results": "".join(buffer.get("websearch", [])),
-                "risk_assessment": "".join(buffer.get("risk", [])),
+                "extracted_loan_data": "".join(buffer["intake"]),
+                "web_search_results": "".join(buffer["websearch"]),
+                "risk_assessment": "".join(buffer["risk"]),
             },
         )
         yield StreamEvent(stage="workflow", status="completed")
 
-    except Exception as exc:  # pragma: no cover - defensive
+    except Exception as exc:
         logger.exception("Workflow stream failed")
         yield StreamEvent(
             stage="workflow", status="error", payload={"message": str(exc)}

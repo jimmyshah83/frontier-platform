@@ -116,4 +116,4 @@ async def stream_workflow(payload: RiskWorkflowInput):
                 "data": event.model_dump_json(),
             }
 
-    return EventSourceResponse(event_source())
+    return EventSourceResponse(event_source(), ping=15)

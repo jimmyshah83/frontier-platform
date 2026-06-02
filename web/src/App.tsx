@@ -116,27 +116,29 @@ export default function App() {
     const stage = parsed.stage as string;
     const status = parsed.status as string;
 
-    if (stage === "intake" || stage === "websearch") {
-      updateStage(stage as StageKey, {
-        status: status === "completed" ? "done" : "running",
-        payload: parsed.payload,
-      });
-      // When the second of intake/websearch completes, kick risk into running.
-      if (status === "completed") {
+    if (stage === "intake" || stage === "websearch" || stage === "risk") {
+      if (status === "running" && parsed.payload?.text) {
+        // Incremental delta — append to buffered text.
+        const delta = String(parsed.payload.text);
         setStages((s) => {
-          const both =
-            (stage === "intake" ? "done" : s.intake.status) === "done" &&
-            (stage === "websearch" ? "done" : s.websearch.status) === "done";
-          return both && s.risk.status === "idle"
-            ? { ...s, risk: { status: "running" } }
-            : s;
+          const prev = s[stage as StageKey];
+          const prevText =
+            prev.payload && typeof prev.payload === "object" && "text" in (prev.payload as object)
+              ? String((prev.payload as { text: unknown }).text ?? "")
+              : "";
+          return {
+            ...s,
+            [stage]: { status: "running", payload: { text: prevText + delta } },
+          };
         });
+      } else if (status === "completed") {
+        updateStage(stage as StageKey, {
+          status: "done",
+          payload: parsed.payload,
+        });
+      } else if (status === "started") {
+        updateStage(stage as StageKey, { status: "running", payload: { text: "" } });
       }
-    } else if (stage === "risk") {
-      updateStage("risk", {
-        status: status === "completed" ? "done" : "running",
-        payload: parsed.payload,
-      });
     } else if (stage === "final" && parsed.payload) {
       const p = parsed.payload as {
         extracted_loan_data: string;
