@@ -6,9 +6,10 @@ A purely local ``Agent`` wrapper would never appear in the portal — only an
 agent version persisted through ``project_client.agents.create_version`` does.
 
 The agent's only tool is the **Tavily MCP server**, referenced through the
-existing ``TavilyMCP`` project connection (``project_connection_id``). The
-connection stores its own API key (``CustomKeys``), so no raw key is embedded
-here — access is governed by the caller's RBAC on the project.
+existing ``TavilyMCP`` project connection (``project_connection_id``). Foundry
+forbids passing raw ``Authorization`` headers on MCP tools, so key-based auth is
+supplied through the project connection (which stores the key as ``CustomKeys``)
+rather than embedded here — access is governed by the caller's RBAC.
 
 Run it directly to create/update the agent and (optionally) ask it a question::
 
@@ -35,11 +36,12 @@ logger = logging.getLogger(__name__)
 
 AGENT_NAME = os.environ.get("WEB_AGENT_NAME", "maf-web-agent")
 
-#: Label the model sees when calling the MCP server.
-MCP_SERVER_LABEL = os.environ.get("TAVILY_MCP_SERVER_LABEL", "tavily")
+#: Name of the existing Foundry connection that fronts the Tavily MCP server.
+TAVILY_CONNECTION_NAME = os.environ.get("TAVILY_MCP_CONNECTION_NAME", "TavilyMCP")
 
-#: Project connection that fronts the Tavily MCP server (stores the API key).
-TAVILY_CONNECTION_NAME = os.environ.get("TAVILY_CONNECTION_NAME", "TavilyMCP")
+
+def _mcp_server_label() -> str:
+    return os.environ.get("TAVILY_MCP_SERVER_LABEL", "tavily")
 
 AGENT_INSTRUCTIONS = """\
 You are a web research assistant. Use the Tavily web-search MCP tool to find
@@ -87,32 +89,42 @@ def _project_client():
     )
 
 
-def _resolve_tavily_connection(project_client) -> tuple[str, str]:
-    """Resolve the TavilyMCP connection to ``(connection_id, server_url)``.
+def _resolve_tavily_connection(project_client):
+    """Return ``(connection_id, target_url)`` for the Tavily MCP connection.
 
-    The connection supplies the MCP endpoint (``target``) and stores the API
-    key (``CustomKeys``); we pass both the id (for auth) and the url (required
-    by the Responses API at invocation time).
+    Foundry requires MCP tools that need credentials to reference a project
+    connection (``project_connection_id``) rather than carrying raw auth
+    headers. The connection itself stores the key, so nothing secret lives here.
     """
     conn = project_client.connections.get(TAVILY_CONNECTION_NAME)
-    conn_id = getattr(conn, "id", None) or TAVILY_CONNECTION_NAME
-    server_url = getattr(conn, "target", None) or os.environ.get("TAVILY_MCP_URL", "")
-    logger.info(
-        "Resolved Tavily connection %r -> id=%s url=%s",
-        TAVILY_CONNECTION_NAME,
-        conn_id,
-        server_url,
-    )
-    return conn_id, server_url
+    connection_id = getattr(conn, "id", None)
+    target = getattr(conn, "target", None) or os.environ.get("TAVILY_MCP_URL")
+    if not connection_id:
+        raise RuntimeError(
+            f"Connection {TAVILY_CONNECTION_NAME!r} has no id; cannot attach MCP tool."
+        )
+    if not target:
+        raise RuntimeError(
+            f"Connection {TAVILY_CONNECTION_NAME!r} has no target URL; "
+            "set TAVILY_MCP_URL to the MCP server endpoint."
+        )
+    return connection_id, target
 
 
-def _build_definition(connection_id: str, server_url: str):
-    """Build the PromptAgent definition with the Tavily MCP tool attached."""
+def _build_definition(project_client):
+    """Build the PromptAgent definition with the Tavily MCP tool attached.
+
+    The MCP server is reached through the ``TavilyMCP`` project connection.
+    Both ``server_url`` (the connection target) and ``project_connection_id``
+    are supplied: the URL alone or the connection alone fails at invocation.
+    """
     from azure.ai.projects.models import MCPTool, PromptAgentDefinition
 
+    connection_id, target = _resolve_tavily_connection(project_client)
+
     tavily_tool = MCPTool(
-        server_label=MCP_SERVER_LABEL,
-        server_url=server_url,
+        server_label=_mcp_server_label(),
+        server_url=target,
         project_connection_id=connection_id,
         # Autonomous backend agent: don't pause for human tool approval.
         require_approval="never",
@@ -140,8 +152,7 @@ def ensure_agent(project_client=None):
     own_client = project_client is None
     client = project_client or _project_client()
     try:
-        connection_id, server_url = _resolve_tavily_connection(client)
-        definition = _build_definition(connection_id, server_url)
+        definition = _build_definition(client)
         version = client.agents.create_version(
             agent_name=AGENT_NAME,
             definition=definition,
